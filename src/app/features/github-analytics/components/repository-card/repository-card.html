@@ -3,28 +3,54 @@
 >
   <div class="flex flex-col justify-between gap-5 xl:flex-row">
     <div class="min-w-0 flex-1">
-      <div class="flex items-start gap-3">
-        <img
-          [src]="repository.owner.avatarUrl"
-          [alt]="repository.owner.username + ' avatar'"
-          class="h-10 w-10 rounded-xl border border-slate-700 bg-slate-800"
-          loading="lazy"
-        />
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex min-w-0 items-start gap-3">
+          <img
+            [src]="repository.owner.avatarUrl"
+            [alt]="repository.owner.username + ' avatar'"
+            class="h-10 w-10 rounded-xl border border-slate-700 bg-slate-800"
+            loading="lazy"
+          />
 
-        <div class="min-w-0">
-          <a
-            [href]="repository.url"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="wrap-break-word text-lg font-semibold text-blue-400 transition group-hover:text-blue-300"
-          >
-            {{ repository.fullName }}
-          </a>
+          <div class="min-w-0">
+            <a
+              [href]="repository.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="wrap-break-word text-lg font-semibold text-blue-400 transition group-hover:text-blue-300"
+            >
+              {{ repository.fullName }}
+            </a>
 
-          <p class="mt-1 text-xs text-slate-500">
-            Updated {{ repository.updatedAt | date: 'mediumDate' }}
-          </p>
+            <p class="mt-1 text-xs text-slate-500">
+              Updated {{ repository.updatedAt | date: 'mediumDate' }}
+            </p>
+          </div>
         </div>
+
+        <button
+          type="button"
+          class="shrink-0 rounded-xl border px-4 py-2 text-xs font-semibold transition"
+          [class.border-emerald-700]="isSaved"
+          [class.bg-emerald-950]="isSaved"
+          [class.text-emerald-200]="isSaved"
+          [class.border-slate-700]="!isSaved"
+          [class.bg-slate-950]="!isSaved"
+          [class.text-slate-200]="!isSaved"
+          [class.hover:bg-slate-800]="!isSaved"
+          [attr.aria-label]="
+            isSaved
+              ? 'Remove ' + repository.fullName + ' from watchlist'
+              : 'Save ' + repository.fullName + ' to watchlist'
+          "
+          (click)="onWatchlistToggle()"
+        >
+          @if (isSaved) {
+            Saved
+          } @else {
+            Save
+          }
+        </button>
       </div>
 
       <p class="mt-4 line-clamp-3 text-sm leading-6 text-slate-400">
