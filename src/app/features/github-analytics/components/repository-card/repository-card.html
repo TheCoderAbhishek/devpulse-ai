@@ -1,0 +1,95 @@
+<article
+  class="group rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm transition hover:border-blue-700/70 hover:bg-slate-900/90"
+>
+  <div class="flex flex-col justify-between gap-5 xl:flex-row">
+    <div class="min-w-0 flex-1">
+      <div class="flex items-start gap-3">
+        <img
+          [src]="repository.owner.avatarUrl"
+          [alt]="repository.owner.username + ' avatar'"
+          class="h-10 w-10 rounded-xl border border-slate-700 bg-slate-800"
+          loading="lazy"
+        />
+
+        <div class="min-w-0">
+          <a
+            [href]="repository.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="wrap-break-word text-lg font-semibold text-blue-400 transition group-hover:text-blue-300"
+          >
+            {{ repository.fullName }}
+          </a>
+
+          <p class="mt-1 text-xs text-slate-500">
+            Updated {{ repository.updatedAt | date: 'mediumDate' }}
+          </p>
+        </div>
+      </div>
+
+      <p class="mt-4 line-clamp-3 text-sm leading-6 text-slate-400">
+        {{ repository.description || 'No description provided.' }}
+      </p>
+
+      <div class="mt-4 flex flex-wrap gap-2">
+        @if (repository.language) {
+          <span class="rounded-full bg-blue-950 px-3 py-1 text-xs font-medium text-blue-200">
+            {{ repository.language }}
+          </span>
+        }
+
+        @if (repository.license) {
+          <span class="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">
+            {{ repository.license.name }}
+          </span>
+        }
+
+        @if (repository.isFork) {
+          <span class="rounded-full bg-purple-950 px-3 py-1 text-xs text-purple-200"> Fork </span>
+        }
+
+        @if (repository.isArchived) {
+          <span class="rounded-full bg-amber-950 px-3 py-1 text-xs text-amber-200"> Archived </span>
+        }
+      </div>
+
+      @if (repository.topics.length > 0) {
+        <div class="mt-4 flex flex-wrap gap-2">
+          @for (topic of repository.topics.slice(0, 8); track topic) {
+            <span class="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-400">
+              #{{ topic }}
+            </span>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="grid min-w-64 grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-2">
+      <div class="rounded-xl border border-slate-800 bg-slate-950 p-3">
+        <p class="text-xs text-slate-500">Stars</p>
+        <p class="mt-1 text-base font-semibold text-white">
+          {{ repository.stars | number }}
+        </p>
+      </div>
+
+      <div class="rounded-xl border border-slate-800 bg-slate-950 p-3">
+        <p class="text-xs text-slate-500">Forks</p>
+        <p class="mt-1 text-base font-semibold text-white">
+          {{ repository.forks | number }}
+        </p>
+      </div>
+
+      <div class="rounded-xl border border-slate-800 bg-slate-950 p-3">
+        <p class="text-xs text-slate-500">Issues</p>
+        <p class="mt-1 text-base font-semibold text-white">
+          {{ repository.openIssues | number }}
+        </p>
+      </div>
+
+      <div class="rounded-xl border border-slate-800 bg-slate-950 p-3">
+        <p class="text-xs text-slate-500">Size</p>
+        <p class="mt-1 text-base font-semibold text-white">{{ repository.sizeKb | number }} KB</p>
+      </div>
+    </div>
+  </div>
+</article>

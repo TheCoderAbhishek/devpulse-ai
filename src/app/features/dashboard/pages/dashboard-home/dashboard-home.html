@@ -41,4 +41,35 @@
       registry, API error model, and rate-limit handling.
     </p>
   </section>
+
+  <section class="rounded-2xl border border-emerald-800 bg-emerald-950/40 p-6">
+    <h2 class="text-lg font-semibold text-emerald-300">Phase 3 Architecture Status</h2>
+
+    <p class="mt-2 text-sm text-emerald-100">
+      Core API architecture initialized:
+      @if (isApiArchitectureReady) {
+        <span class="font-semibold">Ready</span>
+      } @else {
+        <span class="font-semibold">Not Ready</span>
+      }
+    </p>
+  </section>
+
+  <section class="rounded-2xl border border-cyan-800 bg-cyan-950/40 p-6">
+    <h2 class="text-lg font-semibold text-cyan-300">Phase 4 Storage Architecture Status</h2>
+
+    <p class="mt-2 text-sm text-cyan-100">
+      IndexedDB cache foundation:
+      @if (isStorageArchitectureReady$ | async) {
+        <span class="font-semibold">Ready</span>
+      } @else {
+        <span class="font-semibold">Not Ready</span>
+      }
+    </p>
+
+    <p class="mt-2 text-xs text-cyan-200/70">
+      Dexie database, API cache, watchlists, bookmarks, dashboard layouts, and default layout
+      initialization are now configured.
+    </p>
+  </section>
 </div>
