@@ -5,10 +5,11 @@ import { ApiArchitectureSmokeService } from '../../../../core/api/services/api-a
 import { StorageArchitectureSmokeService } from '../../../../core/storage/services/storage-architecture-smoke.service';
 import { GithubWatchlistService } from '../../../github-analytics/data-access/services/github-watchlist.service';
 import { WatchlistHealthOverview } from '../../../watchlists/components/watchlist-health-overview/watchlist-health-overview';
+import { CommunityTrendDashboardWidget } from '../../../community-trends/components/community-trend-dashboard-widget/community-trend-dashboard-widget';
 
 @Component({
   selector: 'app-dashboard-home',
-  imports: [AsyncPipe, WatchlistHealthOverview],
+  imports: [AsyncPipe, WatchlistHealthOverview, CommunityTrendDashboardWidget],
   templateUrl: './dashboard-home.html',
   styleUrl: './dashboard-home.css',
 })

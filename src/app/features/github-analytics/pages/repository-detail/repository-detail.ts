@@ -9,6 +9,7 @@ import { GithubRepositoryDetailStore } from '../../stores/github-repository-deta
 import { GithubWatchlistService } from '../../data-access/services/github-watchlist.service';
 import { RepositoryHealthCard } from '../../components/repository-health-card/repository-health-card';
 import { StackOverflowInsightsCard } from '../../../stackoverflow-insights/components/stackoverflow-insights-card/stackoverflow-insights-card';
+import { CommunityTrendSignalsCard } from '../../../community-trends/components/community-trend-signals-card/community-trend-signals-card';
 
 @Component({
     selector: 'app-repository-detail',
@@ -19,6 +20,7 @@ import { StackOverflowInsightsCard } from '../../../stackoverflow-insights/compo
         RouterLink,
         RepositoryHealthCard,
         StackOverflowInsightsCard,
+        CommunityTrendSignalsCard,
     ],
     providers: [GithubRepositoryDetailStore],
     templateUrl: './repository-detail.html',

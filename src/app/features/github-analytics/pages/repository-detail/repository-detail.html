@@ -267,6 +267,24 @@
           </section>
         }
 
+        @if (vm.detail.communityTrendSignals) {
+          <app-community-trend-signals-card [signals]="vm.detail.communityTrendSignals" />
+        } @else {
+          <section class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+            <p class="text-sm font-medium text-purple-300">Community Trend Signals</p>
+
+            <h2 class="mt-2 text-lg font-semibold text-white">
+              DEV Community and Hacker News Signals Unavailable
+            </h2>
+
+            <p class="mt-2 text-sm leading-6 text-slate-400">
+              Repository details loaded successfully, but DEV Community and Hacker News signal
+              enrichment was unavailable. This can happen because of network restrictions, keyword
+              mismatch, or temporary source limitations.
+            </p>
+          </section>
+        }
+
         <section class="grid gap-6 xl:grid-cols-2">
           <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
             <h2 class="text-lg font-semibold text-white">Recent Releases</h2>

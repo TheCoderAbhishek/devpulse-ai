@@ -50,6 +50,12 @@
     }
   }
 
+  @if (watchlistItems$ | async; as watchlistItems) {
+    @if (watchlistItems.length > 0) {
+      <app-community-trend-dashboard-widget />
+    }
+  }
+
   <section class="rounded-2xl border border-emerald-800 bg-emerald-950/40 p-6">
     <h2 class="text-lg font-semibold text-emerald-300">Phase 3 Architecture Status</h2>
 
