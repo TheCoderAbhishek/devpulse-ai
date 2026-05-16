@@ -10,6 +10,7 @@ import { GithubWatchlistService } from '../../data-access/services/github-watchl
 import { RepositoryHealthCard } from '../../components/repository-health-card/repository-health-card';
 import { StackOverflowInsightsCard } from '../../../stackoverflow-insights/components/stackoverflow-insights-card/stackoverflow-insights-card';
 import { CommunityTrendSignalsCard } from '../../../community-trends/components/community-trend-signals-card/community-trend-signals-card';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
     selector: 'app-repository-detail',
@@ -30,6 +31,7 @@ export class RepositoryDetail {
     private readonly route = inject(ActivatedRoute);
     private readonly destroyRef = inject(DestroyRef);
     private readonly githubWatchlistService = inject(GithubWatchlistService);
+    private readonly toastService = inject(ToastService);
 
     readonly store = inject(GithubRepositoryDetailStore);
     readonly vm$ = this.store.vm$;
@@ -67,11 +69,37 @@ export class RepositoryDetail {
     }
 
     onSaveRepository(repository: GithubRepository): void {
-        this.githubWatchlistService.saveRepository(repository).subscribe();
+        this.githubWatchlistService.saveRepository(repository).subscribe({
+            next: () => {
+                this.toastService.success(
+                    'Repository saved',
+                    `${repository.fullName} was added to your watchlist.`,
+                );
+            },
+            error: () => {
+                this.toastService.error(
+                    'Save failed',
+                    'Unable to save repository to the watchlist.',
+                );
+            },
+        });
     }
 
     onRemoveRepository(repository: GithubRepository): void {
-        this.githubWatchlistService.removeRepository(repository).subscribe();
+        this.githubWatchlistService.removeRepository(repository).subscribe({
+            next: () => {
+                this.toastService.info(
+                    'Repository removed',
+                    `${repository.fullName} was removed from your watchlist.`,
+                );
+            },
+            error: () => {
+                this.toastService.error(
+                    'Remove failed',
+                    'Unable to remove repository from the watchlist.',
+                );
+            },
+        });
     }
 
     isRepositorySaved(

@@ -15,6 +15,8 @@ import { ApiTokenSetting } from '../../models/api-token-settings.model';
 import { ThemeMode } from '../../models/app-settings.model';
 import { AppSettingsService } from '../../services/app-settings.service';
 import { ThemeService } from '../../services/theme.service';
+import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-settings-home',
@@ -31,6 +33,8 @@ export class SettingsHome {
   private readonly appSettingsService = inject(AppSettingsService);
   private readonly themeService = inject(ThemeService);
   private readonly rateLimitManager = inject(RateLimitManagerService);
+  private readonly confirmDialogService = inject(ConfirmDialogService);
+  private readonly toastService = inject(ToastService);
 
   readonly settings = this.appSettingsService.settings;
   readonly themeMode = this.themeService.themeMode;
@@ -74,98 +78,174 @@ export class SettingsHome {
     const token = this.tokenForm.controls.github.value.trim();
 
     if (!token) {
+      this.toastService.warning('Token is empty', 'Paste a GitHub token before saving.');
       return;
     }
 
     this.tokenVault.setToken('github', token);
     this.tokenForm.controls.github.setValue('');
-    window.location.reload();
+
+    this.toastService.success(
+      'GitHub token saved',
+      'The token was saved locally in this browser.',
+    );
   }
 
   removeGithubToken(): void {
     this.tokenVault.removeToken('github');
-    window.location.reload();
+
+    this.toastService.info(
+      'GitHub token removed',
+      'The local GitHub token was removed.',
+    );
   }
 
   saveDevToken(): void {
     const token = this.tokenForm.controls.devTo.value.trim();
 
     if (!token) {
+      this.toastService.warning('Token is empty', 'Paste a DEV token before saving.');
       return;
     }
 
     this.tokenVault.setToken('devTo', token);
     this.tokenForm.controls.devTo.setValue('');
-    window.location.reload();
+
+    this.toastService.success(
+      'DEV token saved',
+      'The token was saved locally in this browser.',
+    );
   }
 
   removeDevToken(): void {
     this.tokenVault.removeToken('devTo');
-    window.location.reload();
+
+    this.toastService.info(
+      'DEV token removed',
+      'The local DEV token was removed.',
+    );
   }
 
   saveAiToken(): void {
     const token = this.tokenForm.controls.ai.value.trim();
 
     if (!token) {
+      this.toastService.warning('Token is empty', 'Paste an AI provider token before saving.');
       return;
     }
 
     this.tokenVault.setToken('ai', token);
     this.tokenForm.controls.ai.setValue('');
-    window.location.reload();
+
+    this.toastService.success(
+      'AI provider token saved',
+      'The token was saved locally in this browser.',
+    );
   }
 
   removeAiToken(): void {
     this.tokenVault.removeToken('ai');
-    window.location.reload();
+
+    this.toastService.info(
+      'AI provider token removed',
+      'The local AI provider token was removed.',
+    );
   }
 
   clearExpiredCache(): void {
-    this.storageMaintenance.deleteExpiredCache().subscribe(() => {
-      window.location.reload();
+    this.storageMaintenance.deleteExpiredCache().subscribe({
+      next: (deletedCount) => {
+        this.toastService.success(
+          'Expired cache cleared',
+          `${deletedCount} expired cache records were removed.`,
+        );
+      },
+      error: () => {
+        this.toastService.error(
+          'Cache cleanup failed',
+          'Unable to clear expired cache records.',
+        );
+      },
     });
   }
 
-  clearApiCache(): void {
-    const confirmed = window.confirm(
-      'Clear all cached public API responses from IndexedDB?',
-    );
+  async clearApiCache(): Promise<void> {
+    const confirmed = await this.confirmDialogService.confirm({
+      title: 'Clear API cache?',
+      message: 'This will clear all cached public API responses from IndexedDB. Watchlist data will remain.',
+      confirmLabel: 'Clear Cache',
+      cancelLabel: 'Cancel',
+      tone: 'warning',
+    });
 
     if (!confirmed) {
       return;
     }
 
-    this.storageMaintenance.clearApiCache().subscribe(() => {
-      window.location.reload();
+    this.storageMaintenance.clearApiCache().subscribe({
+      next: () => {
+        this.toastService.success(
+          'API cache cleared',
+          'Cached public API responses were removed.',
+        );
+      },
+      error: () => {
+        this.toastService.error(
+          'Cache clear failed',
+          'Unable to clear API cache.',
+        );
+      },
     });
   }
 
-  clearAllIndexedDbData(): void {
-    const confirmed = window.confirm(
-      'This will clear API cache, watchlist items, bookmarks, and dashboard layouts from IndexedDB. Continue?',
-    );
+  async clearAllIndexedDbData(): Promise<void> {
+    const confirmed = await this.confirmDialogService.confirm({
+      title: 'Clear all IndexedDB data?',
+      message: 'This will clear API cache, watchlist items, bookmarks, and dashboard layouts from IndexedDB.',
+      confirmLabel: 'Clear All Data',
+      cancelLabel: 'Cancel',
+      tone: 'danger',
+    });
 
     if (!confirmed) {
       return;
     }
 
-    this.storageMaintenance.clearAllLocalData().subscribe(() => {
-      window.location.reload();
+    this.storageMaintenance.clearAllLocalData().subscribe({
+      next: () => {
+        this.toastService.warning(
+          'IndexedDB data cleared',
+          'All local IndexedDB data was removed. Refresh may reinitialize default layout.',
+        );
+      },
+      error: () => {
+        this.toastService.error(
+          'Data clear failed',
+          'Unable to clear IndexedDB data.',
+        );
+      },
     });
   }
 
-  clearAllTokens(): void {
-    const confirmed = window.confirm(
-      'Remove all locally stored provider tokens?',
-    );
+  async clearAllTokens(): Promise<void> {
+    const confirmed = await this.confirmDialogService.confirm({
+      title: 'Clear all provider tokens?',
+      message: 'This removes all locally stored provider tokens from LocalStorage.',
+      confirmLabel: 'Clear Tokens',
+      cancelLabel: 'Cancel',
+      tone: 'danger',
+    });
 
     if (!confirmed) {
       return;
     }
 
     this.tokenVault.clearAllProviderTokens();
-    window.location.reload();
+
+    this.toastService.warning(
+      'Provider tokens cleared',
+      'All locally stored provider tokens were removed.',
+    );
   }
 
   resetSettings(): void {

@@ -1,0 +1,15 @@
+@if (limitedProviders().length > 0) {
+  <div class="border-b border-red-900 bg-red-950 px-6 py-3 text-sm text-red-100">
+    <span class="font-semibold">Rate limit warning:</span>
+    Some providers are currently limited.
+
+    @for (provider of limitedProviders(); track provider.provider) {
+      <span class="ml-2 rounded-full border border-red-800 px-2 py-1 text-xs">
+        {{ provider.provider }}
+        @if (provider.resetAt) {
+          · resets {{ provider.resetAt }}
+        }
+      </span>
+    }
+  </div>
+}
