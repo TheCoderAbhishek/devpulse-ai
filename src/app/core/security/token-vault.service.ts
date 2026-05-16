@@ -47,4 +47,14 @@ export class TokenVaultService {
     hasToken(providerId: ApiProviderId): boolean {
         return Boolean(this.getToken(providerId));
     }
+
+    clearAllProviderTokens(): void {
+        const providers = this.providerRegistry.getAllProviders();
+
+        for (const provider of providers) {
+            if (provider.auth.tokenStorageKey) {
+                this.localStorageService.removeItem(provider.auth.tokenStorageKey);
+            }
+        }
+    }
 }

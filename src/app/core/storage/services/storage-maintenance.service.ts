@@ -45,6 +45,10 @@ export class StorageMaintenanceService {
         });
     }
 
+    clearApiCache(): Observable<void> {
+        return this.apiCacheRepository.clear();
+    }
+
     clearAllLocalData(): Observable<void> {
         return defer(() =>
             from(
