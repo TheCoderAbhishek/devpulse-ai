@@ -1,11 +1,12 @@
 import { DatePipe, DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 import { GithubRepository } from '../../models/github-repository.model';
 
 @Component({
     selector: 'app-repository-card',
-    imports: [DecimalPipe, DatePipe],
+    imports: [DecimalPipe, DatePipe, RouterLink],
     templateUrl: './repository-card.html',
     styleUrl: './repository-card.css',
 })

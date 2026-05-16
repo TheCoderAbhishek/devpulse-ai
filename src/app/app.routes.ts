@@ -5,6 +5,7 @@ import { DashboardHome } from './features/dashboard/pages/dashboard-home/dashboa
 import { GithubSearch } from './features/github-analytics/pages/github-search/github-search';
 import { SettingsHome } from './features/settings/pages/settings-home/settings-home';
 import { WatchlistHome } from './features/watchlists/pages/watchlist-home/watchlist-home';
+import { RepositoryDetail } from './features/github-analytics/pages/repository-detail/repository-detail';
 
 export const routes: Routes = [
     {
@@ -25,6 +26,11 @@ export const routes: Routes = [
                 path: 'github',
                 component: GithubSearch,
                 title: 'GitHub Analytics | DevPulse AI',
+            },
+            {
+                path: 'github/repository/:owner/:repo',
+                component: RepositoryDetail,
+                title: 'Repository Detail | DevPulse AI',
             },
             {
                 path: 'settings',
