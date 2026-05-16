@@ -1,0 +1,344 @@
+<div class="space-y-6">
+  <section class="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
+    <div>
+      <a
+        routerLink="/github"
+        class="text-sm font-medium text-blue-400 transition hover:text-blue-300"
+      >
+        ← Back to GitHub Search
+      </a>
+
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-white">Repository Detail</h1>
+
+      <p class="mt-2 text-slate-400">
+        Detailed repository intelligence powered by GitHub public APIs and cached locally.
+      </p>
+    </div>
+
+    <button
+      type="button"
+      class="rounded-xl border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:bg-slate-800"
+      (click)="onRefresh()"
+    >
+      Force Refresh
+    </button>
+  </section>
+
+  @if (vm$ | async; as vm) {
+    @if (vm.status === 'loading') {
+      <section class="space-y-4">
+        <div class="animate-pulse rounded-2xl border border-slate-800 bg-slate-900 p-6">
+          <div class="h-6 w-1/3 rounded bg-slate-800"></div>
+          <div class="mt-4 h-4 w-2/3 rounded bg-slate-800"></div>
+          <div class="mt-3 h-4 w-1/2 rounded bg-slate-800"></div>
+        </div>
+
+        <div class="grid gap-4 md:grid-cols-4">
+          @for (item of [1, 2, 3, 4]; track item) {
+            <div class="animate-pulse rounded-2xl border border-slate-800 bg-slate-900 p-5">
+              <div class="h-4 w-1/2 rounded bg-slate-800"></div>
+              <div class="mt-4 h-7 w-1/3 rounded bg-slate-800"></div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    @if (vm.status === 'error') {
+      <section class="rounded-2xl border border-red-900 bg-red-950/40 p-6">
+        <h2 class="text-lg font-semibold text-red-300">Repository Detail Failed</h2>
+
+        <p class="mt-2 text-sm text-red-100">
+          {{ getErrorMessage(vm.error) }}
+        </p>
+
+        <button
+          type="button"
+          class="mt-4 rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-500"
+          (click)="onRefresh()"
+        >
+          Retry
+        </button>
+      </section>
+    }
+
+    @if (vm.status === 'success') {
+      @if (savedRepositoryExternalIds$ | async; as savedRepositoryExternalIds) {
+        <section class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+          <div class="flex flex-col justify-between gap-5 xl:flex-row">
+            <div class="min-w-0">
+              <div class="flex items-start gap-4">
+                <img
+                  [src]="vm.detail.repository.owner.avatarUrl"
+                  [alt]="vm.detail.repository.owner.username + ' avatar'"
+                  class="h-14 w-14 rounded-2xl border border-slate-700 bg-slate-800"
+                />
+
+                <div class="min-w-0">
+                  <a
+                    [href]="vm.detail.repository.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="wrap-break-word text-2xl font-bold text-blue-400 transition hover:text-blue-300"
+                  >
+                    {{ vm.detail.repository.fullName }}
+                  </a>
+
+                  <p class="mt-2 max-w-4xl text-sm leading-6 text-slate-400">
+                    {{ vm.detail.repository.description || 'No description provided.' }}
+                  </p>
+
+                  <div class="mt-4 flex flex-wrap gap-2">
+                    <span
+                      class="rounded-full border border-slate-700 px-4 py-2 text-xs text-slate-300"
+                    >
+                      Source: {{ vm.source }}
+                    </span>
+
+                    @if (vm.stale) {
+                      <span
+                        class="rounded-full border border-amber-700 bg-amber-950 px-4 py-2 text-xs text-amber-200"
+                      >
+                        Stale cache
+                      </span>
+                    } @else {
+                      <span
+                        class="rounded-full border border-emerald-700 bg-emerald-950 px-4 py-2 text-xs text-emerald-200"
+                      >
+                        Fresh
+                      </span>
+                    }
+
+                    @if (vm.detail.repository.language) {
+                      <span
+                        class="rounded-full border border-blue-700 bg-blue-950 px-4 py-2 text-xs text-blue-200"
+                      >
+                        {{ vm.detail.repository.language }}
+                      </span>
+                    }
+
+                    @if (vm.detail.repository.license) {
+                      <span
+                        class="rounded-full border border-slate-700 px-4 py-2 text-xs text-slate-300"
+                      >
+                        {{ vm.detail.repository.license.name }}
+                      </span>
+                    }
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex shrink-0 flex-col gap-3 sm:flex-row xl:flex-col">
+              <button
+                type="button"
+                class="rounded-xl px-5 py-3 text-sm font-semibold transition"
+                [class.border]="true"
+                [class.border-emerald-700]="
+                  isRepositorySaved(vm.detail.repository, savedRepositoryExternalIds)
+                "
+                [class.bg-emerald-950]="
+                  isRepositorySaved(vm.detail.repository, savedRepositoryExternalIds)
+                "
+                [class.text-emerald-200]="
+                  isRepositorySaved(vm.detail.repository, savedRepositoryExternalIds)
+                "
+                [class.border-slate-700]="
+                  !isRepositorySaved(vm.detail.repository, savedRepositoryExternalIds)
+                "
+                [class.bg-slate-950]="
+                  !isRepositorySaved(vm.detail.repository, savedRepositoryExternalIds)
+                "
+                [class.text-slate-200]="
+                  !isRepositorySaved(vm.detail.repository, savedRepositoryExternalIds)
+                "
+                (click)="
+                  isRepositorySaved(vm.detail.repository, savedRepositoryExternalIds)
+                    ? onRemoveRepository(vm.detail.repository)
+                    : onSaveRepository(vm.detail.repository)
+                "
+              >
+                @if (isRepositorySaved(vm.detail.repository, savedRepositoryExternalIds)) {
+                  Saved to Watchlist
+                } @else {
+                  Save to Watchlist
+                }
+              </button>
+
+              <a
+                [href]="vm.detail.repository.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="rounded-xl bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-blue-500"
+              >
+                Open in GitHub
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
+            <p class="text-sm text-slate-400">Stars</p>
+            <p class="mt-3 text-3xl font-bold text-white">
+              {{ vm.detail.repository.stars | number }}
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
+            <p class="text-sm text-slate-400">Forks</p>
+            <p class="mt-3 text-3xl font-bold text-white">
+              {{ vm.detail.repository.forks | number }}
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
+            <p class="text-sm text-slate-400">Open Issues</p>
+            <p class="mt-3 text-3xl font-bold text-white">
+              {{ vm.detail.repository.openIssues | number }}
+            </p>
+          </div>
+
+          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
+            <p class="text-sm text-slate-400">Contributors Loaded</p>
+            <p class="mt-3 text-3xl font-bold text-white">
+              {{ vm.detail.contributors.length | number }}
+            </p>
+          </div>
+        </section>
+
+        <section class="grid gap-6 xl:grid-cols-[1fr_1fr]">
+          <app-repository-health-card [health]="vm.detail.health" />
+
+          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+            <h2 class="text-lg font-semibold text-white">README Metadata</h2>
+
+            @if (vm.detail.readme) {
+              <div class="mt-4 space-y-3">
+                <p class="text-sm text-slate-400">
+                  File:
+                  <a
+                    [href]="vm.detail.readme.htmlUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="font-semibold text-blue-400 hover:text-blue-300"
+                  >
+                    {{ vm.detail.readme.path }}
+                  </a>
+                </p>
+
+                <p class="text-sm text-slate-400">
+                  Size:
+                  <span class="font-semibold text-white">
+                    {{ vm.detail.readme.size | number }} bytes
+                  </span>
+                </p>
+
+                @if (vm.detail.readme.contentPreview) {
+                  <pre
+                    class="mt-4 max-h-64 overflow-auto rounded-xl border border-slate-800 bg-slate-950 p-4 text-xs leading-5 text-slate-300"
+                    >{{ vm.detail.readme.contentPreview }}</pre
+                  >
+                }
+              </div>
+            } @else {
+              <p class="mt-4 text-sm text-slate-400">
+                README metadata was not available for this repository.
+              </p>
+            }
+          </div>
+        </section>
+
+        @if (vm.detail.stackOverflowInsights) {
+          <app-stackoverflow-insights-card [insights]="vm.detail.stackOverflowInsights" />
+        } @else {
+          <section class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+            <p class="text-sm font-medium text-orange-300">Stack Overflow Insights</p>
+
+            <h2 class="mt-2 text-lg font-semibold text-white">
+              Developer Question Insights Unavailable
+            </h2>
+
+            <p class="mt-2 text-sm leading-6 text-slate-400">
+              GitHub repository details loaded successfully, but Stack Overflow insights were not
+              available. This may happen because of API throttling, network restrictions, missing
+              related tags, or temporary Stack Exchange API limits.
+            </p>
+          </section>
+        }
+
+        <section class="grid gap-6 xl:grid-cols-2">
+          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+            <h2 class="text-lg font-semibold text-white">Recent Releases</h2>
+
+            @if (vm.detail.releases.length === 0) {
+              <p class="mt-4 text-sm text-slate-400">No recent releases found.</p>
+            } @else {
+              <div class="mt-4 space-y-3">
+                @for (release of vm.detail.releases; track release.id) {
+                  <a
+                    [href]="release.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="block rounded-xl border border-slate-800 bg-slate-950 p-4 transition hover:border-blue-700"
+                  >
+                    <p class="font-semibold text-blue-400">
+                      {{ release.name || release.tagName }}
+                    </p>
+
+                    <p class="mt-1 text-xs text-slate-500">
+                      Published {{ release.publishedAt | date: 'mediumDate' }}
+                    </p>
+
+                    @if (release.isPrerelease) {
+                      <span
+                        class="mt-3 inline-flex rounded-full bg-amber-950 px-3 py-1 text-xs text-amber-200"
+                      >
+                        Prerelease
+                      </span>
+                    }
+                  </a>
+                }
+              </div>
+            }
+          </div>
+
+          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+            <h2 class="text-lg font-semibold text-white">Top Contributors</h2>
+
+            @if (vm.detail.contributors.length === 0) {
+              <p class="mt-4 text-sm text-slate-400">Contributor data was not available.</p>
+            } @else {
+              <div class="mt-4 grid gap-3 sm:grid-cols-2">
+                @for (contributor of vm.detail.contributors; track contributor.id) {
+                  <a
+                    [href]="contributor.profileUrl"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-950 p-3 transition hover:border-blue-700"
+                  >
+                    <img
+                      [src]="contributor.avatarUrl"
+                      [alt]="contributor.username + ' avatar'"
+                      class="h-10 w-10 rounded-xl border border-slate-700"
+                      loading="lazy"
+                    />
+
+                    <div class="min-w-0">
+                      <p class="truncate text-sm font-semibold text-white">
+                        {{ contributor.username }}
+                      </p>
+                      <p class="text-xs text-slate-500">
+                        {{ contributor.contributions | number }} contributions
+                      </p>
+                    </div>
+                  </a>
+                }
+              </div>
+            }
+          </div>
+        </section>
+      }
+    }
+  }
+</div>

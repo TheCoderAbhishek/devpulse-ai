@@ -241,8 +241,15 @@
         </section>
       } @else {
         <section class="grid gap-4">
-          @for (repository of vm.result.repositories; track repository.id) {
-            <app-repository-card [repository]="repository" />
+          @if (savedRepositoryExternalIds$ | async; as savedRepositoryExternalIds) {
+            @for (repository of vm.result.repositories; track repository.id) {
+              <app-repository-card
+                [repository]="repository"
+                [isSaved]="isRepositorySaved(repository, savedRepositoryExternalIds)"
+                (saveRequested)="onSaveRepository($event)"
+                (removeRequested)="onRemoveRepository($event)"
+              />
+            }
           }
         </section>
       }

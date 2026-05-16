@@ -12,8 +12,10 @@ import {
   GithubRepositorySearchParams,
   GithubRepositorySearchSort,
 } from '../../models/github-repository-search-params.model';
+import { GithubRepository } from '../../models/github-repository.model';
 import { GithubSearchStore } from '../../stores/github-search.store';
 import { RepositoryCard } from '../../components/repository-card/repository-card';
+import { GithubWatchlistService } from '../../data-access/services/github-watchlist.service';
 
 interface GithubSearchFormValue {
   readonly query: string;
@@ -35,9 +37,12 @@ interface GithubSearchFormValue {
 export class GithubSearch {
   private readonly formBuilder = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly githubWatchlistService = inject(GithubWatchlistService);
 
   readonly store = inject(GithubSearchStore);
   readonly vm$ = this.store.vm$;
+  readonly savedRepositoryExternalIds$ =
+    this.githubWatchlistService.savedRepositoryExternalIds$;
 
   readonly languages = [
     '',
@@ -116,6 +121,21 @@ export class GithubSearch {
 
   onRefresh(): void {
     this.store.refresh();
+  }
+
+  onSaveRepository(repository: GithubRepository): void {
+    this.githubWatchlistService.saveRepository(repository).subscribe();
+  }
+
+  onRemoveRepository(repository: GithubRepository): void {
+    this.githubWatchlistService.removeRepository(repository).subscribe();
+  }
+
+  isRepositorySaved(
+    repository: GithubRepository,
+    savedRepositoryExternalIds: ReadonlySet<string>,
+  ): boolean {
+    return savedRepositoryExternalIds.has(repository.fullName.toLowerCase());
   }
 
   getErrorMessage(error: unknown): string {
