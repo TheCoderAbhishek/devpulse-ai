@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { catchError, forkJoin, map, Observable, of } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 
 import { ApiClientService } from '../../../../core/api/services/api-client.service';
 import { CacheKeyBuilder } from '../../../../core/cache/utils/cache-key.builder';
@@ -14,6 +14,7 @@ import { GithubRepositoryDto } from '../dto/github-repository.dto';
 import { GithubRepositoryDetail } from '../../models/github-repository-detail.model';
 import { GithubRepositoryMapper } from '../mappers/github-repository.mapper';
 import { GithubRepositoryHealthCalculatorService } from '../services/github-repository-health-calculator.service';
+import { StackOverflowInsightsRepository } from '../../../stackoverflow-insights/data-access/repositories/stackoverflow-insights.repository';
 
 export interface GithubRepositoryDetailParams {
     readonly owner: string;
@@ -29,6 +30,9 @@ export class GithubRepositoryDetailRepository {
     private readonly mapper = inject(GithubRepositoryMapper);
     private readonly healthCalculator = inject(GithubRepositoryHealthCalculatorService);
     private readonly staleWhileRevalidate = inject(StaleWhileRevalidateService);
+    private readonly stackOverflowInsightsRepository = inject(
+        StackOverflowInsightsRepository,
+    );
 
     getRepositoryDetail(
         params: GithubRepositoryDetailParams,
@@ -141,8 +145,22 @@ export class GithubRepositoryDetailRepository {
                         mappedReleases,
                     ),
                     loadedAt: new Date().toISOString(),
-                };
+                } satisfies GithubRepositoryDetail;
             }),
+            switchMap((detail) =>
+                this.stackOverflowInsightsRepository
+                    .getRepositoryInsights(detail.repository)
+                    .pipe(
+                        map((insightsState) => ({
+                            ...detail,
+                            stackOverflowInsights:
+                                insightsState.status === 'success'
+                                    ? insightsState.data
+                                    : undefined,
+                        })),
+                        catchError(() => of(detail)),
+                    ),
+            ),
         );
     }
 }

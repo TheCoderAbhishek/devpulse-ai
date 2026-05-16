@@ -8,10 +8,18 @@ import { GithubRepository } from '../../models/github-repository.model';
 import { GithubRepositoryDetailStore } from '../../stores/github-repository-detail.store';
 import { GithubWatchlistService } from '../../data-access/services/github-watchlist.service';
 import { RepositoryHealthCard } from '../../components/repository-health-card/repository-health-card';
+import { StackOverflowInsightsCard } from '../../../stackoverflow-insights/components/stackoverflow-insights-card/stackoverflow-insights-card';
 
 @Component({
     selector: 'app-repository-detail',
-    imports: [AsyncPipe, DatePipe, DecimalPipe, RouterLink, RepositoryHealthCard],
+    imports: [
+        AsyncPipe,
+        DatePipe,
+        DecimalPipe,
+        RouterLink,
+        RepositoryHealthCard,
+        StackOverflowInsightsCard,
+    ],
     providers: [GithubRepositoryDetailStore],
     templateUrl: './repository-detail.html',
     styleUrl: './repository-detail.css',

@@ -1,3 +1,4 @@
+import { StackOverflowInsights } from '../../stackoverflow-insights/models/stackoverflow-insights.model';
 import { GithubContributor } from './github-contributor.model';
 import { GithubReadme } from './github-readme.model';
 import { GithubRelease } from './github-release.model';
@@ -10,5 +11,6 @@ export interface GithubRepositoryDetail {
     readonly releases: readonly GithubRelease[];
     readonly contributors: readonly GithubContributor[];
     readonly health: GithubRepositoryHealth;
+    readonly stackOverflowInsights?: StackOverflowInsights;
     readonly loadedAt: string;
 }

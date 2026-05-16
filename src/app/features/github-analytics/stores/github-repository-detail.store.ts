@@ -1,5 +1,14 @@
 import { Injectable, inject } from '@angular/core';
-import { catchError, map, Observable, of, startWith, Subject, switchMap } from 'rxjs';
+import {
+    catchError,
+    map,
+    Observable,
+    of,
+    ReplaySubject,
+    shareReplay,
+    startWith,
+    switchMap,
+} from 'rxjs';
 
 import { CachedDataState } from '../../../core/cache/models/cached-data-state.model';
 import {
@@ -12,11 +21,17 @@ import { GithubRepositoryDetailViewState } from '../models/github-repository-det
 @Injectable()
 export class GithubRepositoryDetailStore {
     private readonly detailRepository = inject(GithubRepositoryDetailRepository);
-    private readonly loadTrigger = new Subject<GithubRepositoryDetailParams>();
+
+    private readonly loadTrigger =
+        new ReplaySubject<GithubRepositoryDetailParams>(1);
 
     readonly vm$: Observable<GithubRepositoryDetailViewState> =
         this.loadTrigger.pipe(
             switchMap((params) => this.load(params)),
+            shareReplay({
+                bufferSize: 1,
+                refCount: true,
+            }),
         );
 
     loadRepository(owner: string, repo: string, forceRefresh = false): void {

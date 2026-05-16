@@ -1,0 +1,207 @@
+<section class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+  <div class="flex flex-col justify-between gap-4 lg:flex-row lg:items-start">
+    <div>
+      <p class="text-sm font-medium text-orange-300">Stack Overflow Insights</p>
+
+      <h2 class="mt-2 text-lg font-semibold text-white">Developer Questions & Pain Points</h2>
+
+      <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
+        Related questions are fetched from Stack Exchange public APIs using repository language and
+        topic signals.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      @for (tag of insights.params.tags; track tag) {
+        <span
+          class="rounded-full border border-orange-800 bg-orange-950 px-3 py-1 text-xs text-orange-200"
+        >
+          {{ tag }}
+        </span>
+      }
+    </div>
+  </div>
+
+  <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+    <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+      <p class="text-sm text-slate-400">Questions Loaded</p>
+      <p class="mt-3 text-3xl font-bold text-white">
+        {{ insights.summary.loadedQuestionCount | number }}
+      </p>
+    </div>
+
+    <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+      <p class="text-sm text-slate-400">Answered Ratio</p>
+      <p class="mt-3 text-3xl font-bold text-emerald-300">{{ insights.summary.answeredRatio }}%</p>
+    </div>
+
+    <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+      <p class="text-sm text-slate-400">Accepted Answer Ratio</p>
+      <p class="mt-3 text-3xl font-bold text-blue-300">
+        {{ insights.summary.acceptedAnswerRatio }}%
+      </p>
+    </div>
+
+    <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+      <p class="text-sm text-slate-400">Total Views</p>
+      <p class="mt-3 text-3xl font-bold text-white">
+        {{ insights.summary.totalViews | number }}
+      </p>
+    </div>
+  </div>
+
+  <div class="mt-6 grid gap-6 xl:grid-cols-2">
+    <div class="rounded-2xl border border-slate-800 bg-slate-950 p-5">
+      <h3 class="text-base font-semibold text-white">Common Pain Points</h3>
+
+      @if (insights.painPoints.length === 0) {
+        <p class="mt-4 text-sm text-slate-500">
+          No pain-point pattern detected from the loaded question sample.
+        </p>
+      } @else {
+        <div class="mt-4 space-y-3">
+          @for (painPoint of insights.painPoints; track painPoint.title) {
+            <div
+              class="rounded-xl border p-4"
+              [class.border-emerald-800]="isLow(painPoint.severity)"
+              [class.bg-emerald-950]="isLow(painPoint.severity)"
+              [class.border-amber-800]="isMedium(painPoint.severity)"
+              [class.bg-amber-950]="isMedium(painPoint.severity)"
+              [class.border-red-800]="isHigh(painPoint.severity)"
+              [class.bg-red-950]="isHigh(painPoint.severity)"
+            >
+              <div class="flex items-start justify-between gap-3">
+                <p
+                  class="text-sm font-semibold"
+                  [class.text-emerald-200]="isLow(painPoint.severity)"
+                  [class.text-amber-200]="isMedium(painPoint.severity)"
+                  [class.text-red-200]="isHigh(painPoint.severity)"
+                >
+                  {{ painPoint.title }}
+                </p>
+
+                <span class="rounded-full bg-slate-900 px-3 py-1 text-xs text-slate-300">
+                  {{ painPoint.matchingQuestionCount }} matches
+                </span>
+              </div>
+
+              <p class="mt-2 text-xs leading-5 text-slate-300">
+                {{ painPoint.description }}
+              </p>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="rounded-2xl border border-slate-800 bg-slate-950 p-5">
+      <h3 class="text-base font-semibold text-white">Most Common Tags</h3>
+
+      @if (insights.summary.mostCommonTags.length === 0) {
+        <p class="mt-4 text-sm text-slate-500">No tag metadata available.</p>
+      } @else {
+        <div class="mt-4 flex flex-wrap gap-2">
+          @for (tag of insights.summary.mostCommonTags; track tag) {
+            <span class="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-300">
+              #{{ tag }}
+            </span>
+          }
+        </div>
+      }
+
+      <div class="mt-6 grid grid-cols-2 gap-3">
+        <div class="rounded-xl border border-slate-800 bg-slate-900 p-4">
+          <p class="text-xs text-slate-500">Total Answers</p>
+          <p class="mt-2 text-xl font-bold text-white">
+            {{ insights.summary.totalAnswers | number }}
+          </p>
+        </div>
+
+        <div class="rounded-xl border border-slate-800 bg-slate-900 p-4">
+          <p class="text-xs text-slate-500">Average Score</p>
+          <p class="mt-2 text-xl font-bold text-white">
+            {{ insights.summary.averageScore | number }}
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-6 rounded-xl border border-slate-800 bg-slate-900 p-4">
+        <p class="text-xs text-slate-500">API Quota</p>
+
+        <p class="mt-2 text-sm text-slate-300">
+          Remaining:
+          <span class="font-semibold text-white">
+            {{ insights.quotaRemaining ?? 'N/A' }}
+          </span>
+          /
+          <span class="font-semibold text-white">
+            {{ insights.quotaMax ?? 'N/A' }}
+          </span>
+        </p>
+
+        @if (insights.backoffSeconds) {
+          <p class="mt-2 text-xs text-amber-200">
+            Stack Exchange requested backoff:
+            {{ insights.backoffSeconds }} seconds.
+          </p>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6 rounded-2xl border border-slate-800 bg-slate-950 p-5">
+    <h3 class="text-base font-semibold text-white">Related Questions</h3>
+
+    @if (insights.questions.length === 0) {
+      <p class="mt-4 text-sm text-slate-500">
+        No related Stack Overflow questions found for the selected tags.
+      </p>
+    } @else {
+      <div class="mt-4 space-y-3">
+        @for (question of insights.questions.slice(0, 8); track question.id) {
+          <a
+            [href]="question.url"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="block rounded-xl border border-slate-800 bg-slate-900 p-4 transition hover:border-orange-700"
+          >
+            <div class="flex flex-col justify-between gap-3 md:flex-row md:items-start">
+              <div>
+                <p class="text-sm font-semibold leading-6 text-orange-300">
+                  {{ question.title }}
+                </p>
+
+                <p class="mt-2 text-xs text-slate-500">
+                  Last active {{ question.lastActivityAt | date: 'mediumDate' }}
+                </p>
+              </div>
+
+              <div class="grid shrink-0 grid-cols-3 gap-2 text-center">
+                <div class="rounded-lg bg-slate-950 px-3 py-2">
+                  <p class="text-xs text-slate-500">Score</p>
+                  <p class="text-sm font-semibold text-white">
+                    {{ question.score | number }}
+                  </p>
+                </div>
+
+                <div class="rounded-lg bg-slate-950 px-3 py-2">
+                  <p class="text-xs text-slate-500">Answers</p>
+                  <p class="text-sm font-semibold text-white">
+                    {{ question.answerCount | number }}
+                  </p>
+                </div>
+
+                <div class="rounded-lg bg-slate-950 px-3 py-2">
+                  <p class="text-xs text-slate-500">Views</p>
+                  <p class="text-sm font-semibold text-white">
+                    {{ question.viewCount | number }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </a>
+        }
+      </div>
+    }
+  </div>
+</section>
