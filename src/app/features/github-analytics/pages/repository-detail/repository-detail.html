@@ -208,43 +208,7 @@
         </section>
 
         <section class="grid gap-6 xl:grid-cols-[1fr_1fr]">
-          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <div class="flex items-center justify-between gap-4">
-              <div>
-                <h2 class="text-lg font-semibold text-white">Repository Health</h2>
-                <p class="mt-1 text-sm text-slate-400">
-                  Client-side score based on public GitHub signals.
-                </p>
-              </div>
-
-              <div
-                class="rounded-2xl border px-5 py-4 text-center"
-                [class]="getHealthClass(vm.detail.health.level)"
-              >
-                <p class="text-3xl font-bold">
-                  {{ vm.detail.health.score }}
-                </p>
-                <p class="mt-1 text-xs uppercase tracking-wide">
-                  {{ vm.detail.health.level }}
-                </p>
-              </div>
-            </div>
-
-            <p class="mt-5 text-sm leading-6 text-slate-300">
-              {{ vm.detail.health.summary }}
-            </p>
-
-            <div class="mt-5 space-y-3">
-              @for (signal of vm.detail.health.signals; track signal.label) {
-                <div
-                  class="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950 px-4 py-3"
-                >
-                  <span class="text-sm text-slate-400">{{ signal.label }}</span>
-                  <span class="text-sm font-semibold text-white">{{ signal.value }}</span>
-                </div>
-              }
-            </div>
-          </div>
+          <app-repository-health-card [health]="vm.detail.health" />
 
           <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
             <h2 class="text-lg font-semibold text-white">README Metadata</h2>

@@ -7,10 +7,11 @@ import { map } from 'rxjs';
 import { GithubRepository } from '../../models/github-repository.model';
 import { GithubRepositoryDetailStore } from '../../stores/github-repository-detail.store';
 import { GithubWatchlistService } from '../../data-access/services/github-watchlist.service';
+import { RepositoryHealthCard } from '../../components/repository-health-card/repository-health-card';
 
 @Component({
     selector: 'app-repository-detail',
-    imports: [AsyncPipe, DatePipe, DecimalPipe, RouterLink],
+    imports: [AsyncPipe, DatePipe, DecimalPipe, RouterLink, RepositoryHealthCard],
     providers: [GithubRepositoryDetailStore],
     templateUrl: './repository-detail.html',
     styleUrl: './repository-detail.css',
@@ -68,19 +69,6 @@ export class RepositoryDetail {
         savedRepositoryExternalIds: ReadonlySet<string>,
     ): boolean {
         return savedRepositoryExternalIds.has(repository.fullName.toLowerCase());
-    }
-
-    getHealthClass(level: string): string {
-        switch (level) {
-            case 'excellent':
-                return 'border-emerald-700 bg-emerald-950 text-emerald-200';
-            case 'good':
-                return 'border-blue-700 bg-blue-950 text-blue-200';
-            case 'moderate':
-                return 'border-amber-700 bg-amber-950 text-amber-200';
-            default:
-                return 'border-red-700 bg-red-950 text-red-200';
-        }
     }
 
     getErrorMessage(error: unknown): string {

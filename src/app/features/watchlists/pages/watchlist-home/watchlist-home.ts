@@ -4,10 +4,17 @@ import { RouterLink } from '@angular/router';
 
 import { WatchlistItem } from '../../../../core/storage/models/watchlist-item.model';
 import { GithubWatchlistService } from '../../../github-analytics/data-access/services/github-watchlist.service';
+import { WatchlistHealthOverview } from '../../components/watchlist-health-overview/watchlist-health-overview';
 
 @Component({
     selector: 'app-watchlist-home',
-    imports: [AsyncPipe, DatePipe, DecimalPipe, RouterLink],
+    imports: [
+        AsyncPipe,
+        DatePipe,
+        DecimalPipe,
+        RouterLink,
+        WatchlistHealthOverview,
+    ],
     templateUrl: './watchlist-home.html',
     styleUrl: './watchlist-home.css',
 })

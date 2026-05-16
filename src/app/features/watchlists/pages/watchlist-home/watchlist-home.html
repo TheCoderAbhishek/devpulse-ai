@@ -33,6 +33,10 @@
   </section>
 
   @if (watchlistItems$ | async; as watchlistItems) {
+    @if (watchlistItems.length > 0) {
+      <app-watchlist-health-overview [items]="watchlistItems" />
+    }
+
     @if (watchlistItems.length === 0) {
       <section class="rounded-2xl border border-slate-800 bg-slate-900 p-8 text-center">
         <h2 class="text-xl font-semibold text-white">No repositories tracked yet</h2>
