@@ -4,7 +4,7 @@ export const environment = {
     appVersion: '1.0.0',
     appDescription:
         'Frontend-only developer intelligence dashboard for GitHub, Stack Overflow, DEV Community, and Hacker News signals.',
-    siteUrl: 'https://devpulse-ai.example.com',
+    siteUrl: 'https://ashy-forest-00a623f00.7.azurestaticapps.net',
     repositoryUrl: 'https://github.com/TheCoderAbhishek/devpulse-ai',
     authorName: 'Abhishek Patil',
     enableDeveloperDiagnostics: false,

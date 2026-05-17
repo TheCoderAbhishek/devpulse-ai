@@ -13,7 +13,9 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "test:ci": "ng test --watch=false --browsers=chromium",
-    "test:coverage": "ng test --watch=false --browsers=chromium --coverage"
+    "test:coverage": "ng test --watch=false --browsers=chromium --coverage",
+    "build:azure": "ng build --configuration production",
+    "serve:azure": "npx http-server dist/devpulse-ai/browser -p 8080 -c-1"
   },
   "private": true,
   "packageManager": "npm@11.14.1",
