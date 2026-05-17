@@ -1,19 +1,25 @@
-<section class="rounded-2xl border border-red-900 bg-red-950/40 p-6">
-  <h2 class="text-lg font-semibold text-red-300">
-    {{ title }}
-  </h2>
+<section
+  class="rounded-3xl border border-red-500/30 bg-red-950/35 p-6 shadow-xl shadow-red-950/20 backdrop-blur"
+>
+  <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+    <div>
+      <h2 class="text-lg font-bold text-red-200">
+        {{ title }}
+      </h2>
 
-  @if (message) {
-    <p class="mt-2 text-sm leading-6 text-red-100">
-      {{ message }}
-    </p>
-  }
+      @if (message) {
+        <p class="mt-2 max-w-3xl text-sm leading-6 text-red-100/90">
+          {{ message }}
+        </p>
+      }
+    </div>
 
-  <button
-    type="button"
-    class="mt-4 rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-500"
-    (click)="onRetry()"
-  >
-    {{ retryLabel }}
-  </button>
+    <button
+      type="button"
+      class="rounded-2xl bg-red-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-red-950/30 transition hover:-translate-y-0.5 hover:bg-red-500 active:translate-y-0"
+      (click)="onRetry()"
+    >
+      {{ retryLabel }}
+    </button>
+  </div>
 </section>

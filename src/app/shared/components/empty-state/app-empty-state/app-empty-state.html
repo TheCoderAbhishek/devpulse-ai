@@ -1,22 +1,22 @@
-<section class="rounded-2xl border border-slate-800 bg-slate-900 p-8 text-center">
+<section class="premium-card rounded-3xl p-8 text-center">
   <div
-    class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-slate-700 bg-slate-950 text-2xl"
+    class="mx-auto flex h-16 w-16 items-center justify-center rounded-3xl border border-blue-500/20 bg-blue-500/10 text-3xl shadow-lg shadow-blue-950/20"
   >
     ⌀
   </div>
 
-  <h2 class="mt-5 text-xl font-semibold text-white">
+  <h2 class="mt-5 text-xl font-bold premium-title">
     {{ title }}
   </h2>
 
   @if (description) {
-    <p class="mx-auto mt-3 max-w-2xl text-sm leading-6 text-slate-400">
+    <p class="mx-auto mt-3 max-w-2xl text-sm leading-6 premium-muted">
       {{ description }}
     </p>
   }
 
   @if (actionLabel) {
-    <div class="mt-5">
+    <div class="mt-6">
       <ng-content />
     </div>
   }

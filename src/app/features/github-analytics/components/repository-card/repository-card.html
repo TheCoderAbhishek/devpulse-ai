@@ -1,14 +1,12 @@
-<article
-  class="group rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm transition hover:border-blue-700/70 hover:bg-slate-900/90"
->
+<article class="premium-card premium-card-hover rounded-3xl p-5">
   <div class="flex flex-col justify-between gap-5 xl:flex-row">
     <div class="min-w-0 flex-1">
       <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-        <div class="flex min-w-0 items-start gap-3">
+        <div class="flex min-w-0 items-start gap-4">
           <img
             [src]="repository.owner.avatarUrl"
             [alt]="repository.owner.username + ' avatar'"
-            class="h-10 w-10 shrink-0 rounded-xl border border-slate-700 bg-slate-800"
+            class="h-12 w-12 shrink-0 rounded-2xl border border-white/10 bg-slate-800 shadow-lg shadow-black/20"
             loading="lazy"
           />
 
@@ -17,28 +15,29 @@
               [href]="repository.url"
               target="_blank"
               rel="noopener noreferrer"
-              class="wrap-break-word text-lg font-semibold text-blue-400 transition group-hover:text-blue-300"
+              class="wrap-break-word text-lg font-bold text-blue-300 transition group-hover:text-blue-200"
             >
               {{ repository.fullName }}
             </a>
 
-            <p class="mt-1 text-xs text-slate-500">
+            <p class="mt-1 text-xs premium-muted">
               Updated {{ repository.updatedAt | date: 'mediumDate' }}
             </p>
           </div>
         </div>
 
-        <div class="flex shrink-0 items-center gap-2">
+        <div class="flex shrink-0 flex-wrap items-center gap-2">
           <button
             type="button"
-            class="rounded-xl border px-4 py-2 text-xs font-semibold transition"
-            [class.border-emerald-700]="isSaved"
-            [class.bg-emerald-950]="isSaved"
+            class="rounded-2xl border px-4 py-2 text-xs font-bold transition hover:-translate-y-0.5 active:translate-y-0"
+            [class.border-emerald-500/40]="isSaved"
+            [class.bg-emerald-500/15]="isSaved"
             [class.text-emerald-200]="isSaved"
-            [class.border-slate-700]="!isSaved"
-            [class.bg-slate-950]="!isSaved"
+            [class.border-white/10]="!isSaved"
+            [class.bg-white/5]="!isSaved"
             [class.text-slate-200]="!isSaved"
-            [class.hover:bg-slate-800]="!isSaved"
+            [class.hover:border-blue-500/50]="!isSaved"
+            [class.hover:bg-blue-500/10]="!isSaved"
             [attr.aria-label]="
               isSaved
                 ? 'Remove ' + repository.fullName + ' from watchlist'
@@ -55,75 +54,77 @@
 
           <a
             [routerLink]="['/github/repository', repository.owner.username, repository.name]"
-            class="rounded-xl border border-blue-800 bg-blue-950 px-4 py-2 text-xs font-semibold text-blue-200 transition hover:bg-blue-900"
+            class="rounded-2xl border border-blue-500/30 bg-blue-500/10 px-4 py-2 text-xs font-bold text-blue-200 transition hover:-translate-y-0.5 hover:bg-blue-500/20 active:translate-y-0"
           >
             Details
           </a>
         </div>
       </div>
 
-      <p class="mt-4 line-clamp-3 text-sm leading-6 text-slate-400">
+      <p class="mt-4 line-clamp-3 text-sm leading-6 premium-muted">
         {{ repository.description || 'No description provided.' }}
       </p>
 
       <div class="mt-4 flex flex-wrap gap-2">
         @if (repository.language) {
-          <span class="rounded-full bg-blue-950 px-3 py-1 text-xs font-medium text-blue-200">
+          <span class="premium-badge border-blue-500/30 bg-blue-500/10 text-blue-200">
             {{ repository.language }}
           </span>
         }
 
         @if (repository.license) {
-          <span class="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300">
+          <span class="premium-badge">
             {{ repository.license.name }}
           </span>
         }
 
         @if (repository.isFork) {
-          <span class="rounded-full bg-purple-950 px-3 py-1 text-xs text-purple-200"> Fork </span>
+          <span class="premium-badge border-purple-500/30 bg-purple-500/10 text-purple-200">
+            Fork
+          </span>
         }
 
         @if (repository.isArchived) {
-          <span class="rounded-full bg-amber-950 px-3 py-1 text-xs text-amber-200"> Archived </span>
+          <span class="premium-badge border-amber-500/30 bg-amber-500/10 text-amber-200">
+            Archived
+          </span>
         }
       </div>
 
       @if (repository.topics.length > 0) {
         <div class="mt-4 flex flex-wrap gap-2">
           @for (topic of repository.topics.slice(0, 8); track topic) {
-            <span class="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-400">
-              #{{ topic }}
-            </span>
+            <span class="premium-badge"> #{{ topic }} </span>
           }
         </div>
       }
     </div>
 
     <div class="grid min-w-64 grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-2">
-      <div class="rounded-xl border border-slate-800 bg-slate-950 p-3">
-        <p class="text-xs text-slate-500">Stars</p>
-        <p class="mt-1 text-base font-semibold text-white">
+      <div class="premium-metric-card">
+        <p class="text-xs premium-muted">Stars</p>
+        <p class="mt-1 text-base font-bold premium-title">
           {{ repository.stars | number }}
         </p>
       </div>
 
-      <div class="rounded-xl border border-slate-800 bg-slate-950 p-3">
-        <p class="text-xs text-slate-500">Forks</p>
-        <p class="mt-1 text-base font-semibold text-white">
+      <div class="premium-metric-card">
+        <p class="text-xs premium-muted">Forks</p>
+        <p class="mt-1 text-base font-bold premium-title">
           {{ repository.forks | number }}
         </p>
       </div>
 
-      <div class="rounded-xl border border-slate-800 bg-slate-950 p-3">
-        <p class="text-xs text-slate-500">Issues</p>
-        <p class="mt-1 text-base font-semibold text-white">
+      <div class="premium-metric-card">
+        <p class="text-xs premium-muted">Issues</p>
+        <p class="mt-1 text-base font-bold premium-title">
           {{ repository.openIssues | number }}
         </p>
       </div>
 
-      <div class="rounded-xl border border-slate-800 bg-slate-950 p-3">
-        <p class="text-xs text-slate-500">Size</p>
-        <p class="mt-1 text-base font-semibold text-white">{{ repository.sizeKb | number }} KB</p>
+      <div class="premium-metric-card">
+        <p class="text-xs premium-muted">Size</p>
+        <p class="mt-1 text-base font-bold premium-title">{{ repository.sizeKb | number }} KB</p>
       </div>
     </div>
   </div>

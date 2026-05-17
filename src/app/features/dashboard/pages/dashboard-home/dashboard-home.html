@@ -1,89 +1,121 @@
 <div class="space-y-6">
-  <section>
-    <p class="text-sm font-medium text-blue-400">Overview</p>
-    <h1 class="mt-2 text-3xl font-bold tracking-tight text-white">DevPulse AI Dashboard</h1>
-    <p class="mt-3 max-w-3xl text-slate-400">
-      Monitor open-source repositories, developer discussions, technology trends, and AI-assisted
-      insights using public APIs and client-side architecture only.
-    </p>
+  <section class="premium-card rounded-3xl p-6 sm:p-8">
+    <div class="flex flex-col justify-between gap-6 xl:flex-row xl:items-end">
+      <div>
+        <p class="premium-page-kicker">Dashboard</p>
+
+        <h1 class="mt-3 text-3xl font-black tracking-tight premium-title sm:text-5xl">
+          Developer Intelligence
+          <span class="gradient-text">Command Center</span>
+        </h1>
+
+        <p class="mt-4 max-w-3xl text-base leading-7 premium-muted">
+          Track open-source repository health, local watchlists, public API cache, developer pain
+          points, and community trend signals from a frontend-only Angular architecture.
+        </p>
+      </div>
+
+      <a routerLink="/github" class="premium-primary-button w-fit"> Analyze Repository </a>
+    </div>
   </section>
 
   <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-    <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
-      <p class="text-sm text-slate-400">Tracked Repositories</p>
-      <p class="mt-3 text-3xl font-bold text-white">
+    <div class="premium-metric-card premium-card-hover">
+      <p class="text-sm premium-muted">Tracked Repositories</p>
+      <p class="mt-3 text-4xl font-black premium-title">
         {{ (trackedRepositoryCount$ | async) ?? 0 }}
       </p>
-      <p class="mt-2 text-xs text-slate-500">Local watchlist via IndexedDB</p>
+      <p class="mt-2 premium-help-text">Saved locally in IndexedDB</p>
     </div>
 
-    <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
-      <p class="text-sm text-slate-400">API Sources</p>
-      <p class="mt-3 text-3xl font-bold text-white">5+</p>
-      <p class="mt-2 text-xs text-slate-500">GitHub, Stack Exchange, DEV, HN, Reddit</p>
+    <div class="premium-metric-card premium-card-hover">
+      <p class="text-sm premium-muted">API Architecture</p>
+      <p class="mt-3 text-4xl font-black text-emerald-300">
+        @if (isApiArchitectureReady) {
+          Ready
+        } @else {
+          Issue
+        }
+      </p>
+      <p class="mt-2 premium-help-text">Axios, interceptors, provider registry</p>
     </div>
 
-    <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
-      <p class="text-sm text-slate-400">Backend Services</p>
-      <p class="mt-3 text-3xl font-bold text-emerald-400">0</p>
-      <p class="mt-2 text-xs text-slate-500">Strict frontend-only architecture</p>
+    <div class="premium-metric-card premium-card-hover">
+      <p class="text-sm premium-muted">Storage Architecture</p>
+      <p class="mt-3 text-4xl font-black text-blue-300">
+        @if (isStorageArchitectureReady$ | async) {
+          Ready
+        } @else {
+          Issue
+        }
+      </p>
+      <p class="mt-2 premium-help-text">Dexie, IndexedDB, cache, watchlists</p>
     </div>
 
-    <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5 shadow-sm">
-      <p class="text-sm text-slate-400">Offline Ready</p>
-      <p class="mt-3 text-3xl font-bold text-amber-400">PWA</p>
-      <p class="mt-2 text-xs text-slate-500">Service worker and browser cache</p>
+    <div class="premium-metric-card premium-card-hover">
+      <p class="text-sm premium-muted">Backend Services</p>
+      <p class="mt-3 text-4xl font-black text-violet-300">0</p>
+      <p class="mt-2 premium-help-text">Strict frontend-only architecture</p>
     </div>
-  </section>
-
-  <section class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-    <h2 class="text-lg font-semibold text-white">Next Implementation Area</h2>
-    <p class="mt-2 text-slate-400">
-      The next development milestone is the core API architecture: Axios client factory, provider
-      registry, API error model, and rate-limit handling.
-    </p>
   </section>
 
   @if (watchlistItems$ | async; as watchlistItems) {
     @if (watchlistItems.length > 0) {
       <app-watchlist-health-overview [items]="watchlistItems" />
-    }
-  }
 
-  @if (watchlistItems$ | async; as watchlistItems) {
-    @if (watchlistItems.length > 0) {
       <app-community-trend-dashboard-widget />
+    } @else {
+      <section class="premium-card rounded-3xl p-6">
+        <div class="flex flex-col justify-between gap-4 lg:flex-row lg:items-center">
+          <div>
+            <h2 class="text-xl font-bold premium-title">
+              Start building your repository watchlist
+            </h2>
+
+            <p class="mt-2 max-w-3xl text-sm leading-6 premium-muted">
+              Search GitHub repositories and save interesting projects to unlock watchlist health
+              overview and community trend widgets.
+            </p>
+          </div>
+
+          <a routerLink="/github" class="premium-primary-button w-fit"> Search GitHub </a>
+        </div>
+      </section>
     }
   }
 
-  <section class="rounded-2xl border border-emerald-800 bg-emerald-950/40 p-6">
-    <h2 class="text-lg font-semibold text-emerald-300">Phase 3 Architecture Status</h2>
+  <section class="grid gap-4 lg:grid-cols-2">
+    <div class="premium-card premium-card-hover rounded-3xl p-6">
+      <h2 class="text-lg font-bold premium-title">Frontend Architecture</h2>
 
-    <p class="mt-2 text-sm text-emerald-100">
-      Core API architecture initialized:
-      @if (isApiArchitectureReady) {
-        <span class="font-semibold">Ready</span>
-      } @else {
-        <span class="font-semibold">Not Ready</span>
-      }
-    </p>
-  </section>
+      <p class="mt-3 text-sm leading-6 premium-muted">
+        Built with Angular standalone components, route-level lazy loading, RxJS streams,
+        signal-based preferences, Axios API clients, and local IndexedDB persistence.
+      </p>
 
-  <section class="rounded-2xl border border-cyan-800 bg-cyan-950/40 p-6">
-    <h2 class="text-lg font-semibold text-cyan-300">Phase 4 Storage Architecture Status</h2>
+      <div class="mt-5 flex flex-wrap gap-2">
+        <span class="premium-badge">Angular</span>
+        <span class="premium-badge">RxJS</span>
+        <span class="premium-badge">Signals</span>
+        <span class="premium-badge">IndexedDB</span>
+        <span class="premium-badge">Tailwind CSS</span>
+      </div>
+    </div>
 
-    <p class="mt-2 text-sm text-cyan-100">
-      IndexedDB cache foundation:
-      @if (isStorageArchitectureReady$ | async) {
-        <span class="font-semibold">Ready</span>
-      } @else {
-        <span class="font-semibold">Not Ready</span>
-      }
-    </p>
+    <div class="premium-card premium-card-hover rounded-3xl p-6">
+      <h2 class="text-lg font-bold premium-title">Public API Intelligence</h2>
 
-    <p class="mt-2 text-xs text-cyan-200/70">
-      Dexie database, API cache, watchlists, bookmarks, dashboard layouts, and default layout
-      initialization are now configured.
-    </p>
+      <p class="mt-3 text-sm leading-6 premium-muted">
+        Combines GitHub repository data, Stack Overflow developer questions, DEV Community articles,
+        and Hacker News discussion signals without owning any backend infrastructure.
+      </p>
+
+      <div class="mt-5 flex flex-wrap gap-2">
+        <span class="premium-badge">GitHub</span>
+        <span class="premium-badge">Stack Exchange</span>
+        <span class="premium-badge">DEV</span>
+        <span class="premium-badge">Hacker News</span>
+      </div>
+    </div>
   </section>
 </div>
