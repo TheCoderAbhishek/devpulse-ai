@@ -11,11 +11,11 @@ import {
 } from 'lucide-angular';
 
 import { GlobalErrorPanel } from '../../core/errors/components/global-error-panel/global-error-panel';
+import { ThemeToggle } from '../../shared/components/buttons/theme-toggle/theme-toggle';
 import { ConfirmDialog } from '../../shared/components/dialogs/confirm-dialog/confirm-dialog';
 import { OfflineBanner } from '../../shared/components/status/offline-banner/offline-banner';
 import { RateLimitBanner } from '../../shared/components/status/rate-limit-banner/rate-limit-banner';
 import { ToastContainer } from '../../shared/components/toasts/toast-container/toast-container';
-import { ThemeToggle } from '../../shared/components/buttons/theme-toggle/theme-toggle';
 
 @Component({
   selector: 'app-app-shell',

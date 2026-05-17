@@ -1,9 +1,17 @@
 <div class="min-h-screen text-slate-100">
   <div class="pointer-events-none fixed inset-0 -z-10 soft-grid-bg opacity-40"></div>
 
+  <div
+    class="pointer-events-none fixed left-0 top-0 -z-10 h-96 w-96 rounded-full bg-blue-500/20 blur-3xl"
+  ></div>
+
+  <div
+    class="pointer-events-none fixed right-0 top-20 -z-10 h-96 w-96 rounded-full bg-violet-500/20 blur-3xl"
+  ></div>
+
   <div class="flex min-h-screen">
     <aside
-      class="hidden w-76 border-r border-white/10 bg-slate-950/70 px-5 py-6 backdrop-blur-2xl lg:block"
+      class="hidden w-80 border-r border-white/10 bg-slate-950/70 px-5 py-6 backdrop-blur-2xl lg:block"
     >
       <div class="flex items-center gap-3">
         <div
@@ -56,7 +64,9 @@
         </a>
       </nav>
 
-      <div class="mt-8 rounded-3xl border border-blue-500/20 bg-blue-500/10 p-4">
+      <div
+        class="mt-8 rounded-3xl border border-blue-500/20 bg-blue-500/10 p-4 shadow-lg shadow-blue-950/20"
+      >
         <div class="flex items-center gap-2 text-blue-200">
           <lucide-angular [img]="BarChart3" class="h-4 w-4" />
           <p class="text-sm font-semibold">Portfolio-grade app</p>
@@ -68,7 +78,7 @@
       </div>
     </aside>
 
-    <main class="flex min-h-screen flex-1 flex-col">
+    <main class="flex min-h-screen min-w-0 flex-1 flex-col">
       <app-offline-banner />
       <app-rate-limit-banner />
       <app-global-error-panel />
@@ -77,22 +87,22 @@
         class="sticky top-0 z-30 border-b border-white/10 bg-slate-950/70 px-4 py-4 backdrop-blur-2xl sm:px-6"
       >
         <div class="flex items-center justify-between gap-4">
-          <div>
+          <div class="min-w-0">
             <p class="text-xs font-semibold uppercase tracking-[0.28em] text-blue-300">
               DevPulse AI
             </p>
 
-            <h1 class="mt-1 text-lg font-bold tracking-tight text-white sm:text-xl">
+            <h1 class="mt-1 truncate text-lg font-bold tracking-tight text-white sm:text-xl">
               Open-source intelligence workspace
             </h1>
           </div>
 
-          <div class="flex items-center gap-3">
+          <div class="flex shrink-0 items-center gap-3">
             <app-theme-toggle />
 
             <a
               routerLink="/github"
-              class="hidden rounded-2xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-950/30 transition hover:bg-blue-500 sm:inline-flex"
+              class="hidden rounded-2xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-950/30 transition hover:-translate-y-0.5 hover:bg-blue-500 hover:shadow-blue-900/40 active:translate-y-0 sm:inline-flex"
             >
               Analyze Repository
             </a>
@@ -103,7 +113,8 @@
           <a
             routerLink="/dashboard"
             routerLinkActive="bg-blue-600 text-white"
-            class="flex items-center justify-center rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-300"
+            class="flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-300 transition hover:bg-white/10"
+            aria-label="Dashboard"
           >
             <lucide-angular [img]="Home" class="h-4 w-4" />
           </a>
@@ -111,7 +122,8 @@
           <a
             routerLink="/github"
             routerLinkActive="bg-blue-600 text-white"
-            class="flex items-center justify-center rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-300"
+            class="flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-300 transition hover:bg-white/10"
+            aria-label="GitHub Analytics"
           >
             <lucide-angular [img]="Github" class="h-4 w-4" />
           </a>
@@ -119,7 +131,8 @@
           <a
             routerLink="/watchlist"
             routerLinkActive="bg-blue-600 text-white"
-            class="flex items-center justify-center rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-300"
+            class="flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-300 transition hover:bg-white/10"
+            aria-label="Watchlist"
           >
             <lucide-angular [img]="Bookmark" class="h-4 w-4" />
           </a>
@@ -127,7 +140,8 @@
           <a
             routerLink="/settings"
             routerLinkActive="bg-blue-600 text-white"
-            class="flex items-center justify-center rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-300"
+            class="flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-slate-300 transition hover:bg-white/10"
+            aria-label="Settings"
           >
             <lucide-angular [img]="Settings" class="h-4 w-4" />
           </a>
