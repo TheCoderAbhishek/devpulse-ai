@@ -6,6 +6,7 @@
 
 ```text
 https://ashy-forest-00a623f00.7.azurestaticapps.net
+```
 
 DevPulse AI is a frontend-only developer intelligence dashboard built with Angular, RxJS, Tailwind CSS, Axios, IndexedDB, and public APIs.
 
