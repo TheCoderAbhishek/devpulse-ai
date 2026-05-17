@@ -5,6 +5,8 @@ import { RouterLink } from '@angular/router';
 import { WatchlistItem } from '../../../../core/storage/models/watchlist-item.model';
 import { GithubWatchlistService } from '../../../github-analytics/data-access/services/github-watchlist.service';
 import { WatchlistHealthOverview } from '../../components/watchlist-health-overview/watchlist-health-overview';
+import { ConfirmDialogService } from '../../../../shared/services/confirm-dialog.service';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
     selector: 'app-watchlist-home',
@@ -20,6 +22,8 @@ import { WatchlistHealthOverview } from '../../components/watchlist-health-overv
 })
 export class WatchlistHome {
     private readonly githubWatchlistService = inject(GithubWatchlistService);
+    private readonly confirmDialogService = inject(ConfirmDialogService);
+    private readonly toastService = inject(ToastService);
 
     readonly watchlistItems$ =
         this.githubWatchlistService.repositoryWatchlistItems$;
@@ -27,8 +31,33 @@ export class WatchlistHome {
     readonly trackedRepositoryCount$ =
         this.githubWatchlistService.trackedRepositoryCount$;
 
-    removeItem(item: WatchlistItem): void {
-        this.githubWatchlistService.removeWatchlistItem(item).subscribe();
+    async removeItem(item: WatchlistItem): Promise<void> {
+        const confirmed = await this.confirmDialogService.confirm({
+            title: 'Remove repository?',
+            message: `Remove ${item.title} from your local watchlist?`,
+            confirmLabel: 'Remove',
+            cancelLabel: 'Cancel',
+            tone: 'danger',
+        });
+
+        if (!confirmed) {
+            return;
+        }
+
+        this.githubWatchlistService.removeWatchlistItem(item).subscribe({
+            next: () => {
+                this.toastService.info(
+                    'Repository removed',
+                    `${item.title} was removed from your watchlist.`,
+                );
+            },
+            error: () => {
+                this.toastService.error(
+                    'Remove failed',
+                    'Unable to remove repository from the watchlist.',
+                );
+            },
+        });
     }
 
     getNumberMetric(item: WatchlistItem, key: string): number {

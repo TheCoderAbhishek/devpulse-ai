@@ -15,6 +15,7 @@ import { GithubRepositoryDetail } from '../../models/github-repository-detail.mo
 import { GithubRepositoryMapper } from '../mappers/github-repository.mapper';
 import { GithubRepositoryHealthCalculatorService } from '../services/github-repository-health-calculator.service';
 import { StackOverflowInsightsRepository } from '../../../stackoverflow-insights/data-access/repositories/stackoverflow-insights.repository';
+import { CommunityTrendSignalsRepository } from '../../../community-trends/data-access/repositories/community-trend-signals.repository';
 
 export interface GithubRepositoryDetailParams {
     readonly owner: string;
@@ -32,6 +33,9 @@ export class GithubRepositoryDetailRepository {
     private readonly staleWhileRevalidate = inject(StaleWhileRevalidateService);
     private readonly stackOverflowInsightsRepository = inject(
         StackOverflowInsightsRepository,
+    );
+    private readonly communityTrendSignalsRepository = inject(
+        CommunityTrendSignalsRepository,
     );
 
     getRepositoryDetail(
@@ -148,18 +152,25 @@ export class GithubRepositoryDetailRepository {
                 } satisfies GithubRepositoryDetail;
             }),
             switchMap((detail) =>
-                this.stackOverflowInsightsRepository
-                    .getRepositoryInsights(detail.repository)
-                    .pipe(
-                        map((insightsState) => ({
-                            ...detail,
-                            stackOverflowInsights:
-                                insightsState.status === 'success'
-                                    ? insightsState.data
-                                    : undefined,
-                        })),
-                        catchError(() => of(detail)),
-                    ),
+                forkJoin({
+                    stackOverflowInsights: this.stackOverflowInsightsRepository
+                        .getRepositoryInsights(detail.repository)
+                        .pipe(
+                            map((insightsState) =>
+                                insightsState.status === 'success' ? insightsState.data : undefined,
+                            ),
+                            catchError(() => of(undefined)),
+                        ),
+                    communityTrendSignals: this.communityTrendSignalsRepository
+                        .getRepositoryTrendSignals(detail.repository)
+                        .pipe(catchError(() => of(undefined))),
+                }).pipe(
+                    map(({ stackOverflowInsights, communityTrendSignals }) => ({
+                        ...detail,
+                        stackOverflowInsights,
+                        communityTrendSignals,
+                    })),
+                ),
             ),
         );
     }

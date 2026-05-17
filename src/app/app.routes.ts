@@ -1,11 +1,6 @@
 import { Routes } from '@angular/router';
 
 import { AppShell } from './layouts/app-shell/app-shell';
-import { DashboardHome } from './features/dashboard/pages/dashboard-home/dashboard-home';
-import { GithubSearch } from './features/github-analytics/pages/github-search/github-search';
-import { SettingsHome } from './features/settings/pages/settings-home/settings-home';
-import { WatchlistHome } from './features/watchlists/pages/watchlist-home/watchlist-home';
-import { RepositoryDetail } from './features/github-analytics/pages/repository-detail/repository-detail';
 
 export const routes: Routes = [
     {
@@ -19,28 +14,31 @@ export const routes: Routes = [
             },
             {
                 path: 'dashboard',
-                component: DashboardHome,
-                title: 'Dashboard | DevPulse AI',
+                loadChildren: () =>
+                    import('./features/dashboard/dashboard.routes').then(
+                        (routes) => routes.dashboardRoutes,
+                    ),
             },
             {
                 path: 'github',
-                component: GithubSearch,
-                title: 'GitHub Analytics | DevPulse AI',
-            },
-            {
-                path: 'github/repository/:owner/:repo',
-                component: RepositoryDetail,
-                title: 'Repository Detail | DevPulse AI',
-            },
-            {
-                path: 'settings',
-                component: SettingsHome,
-                title: 'Settings | DevPulse AI',
+                loadChildren: () =>
+                    import('./features/github-analytics/github-analytics.routes').then(
+                        (routes) => routes.githubAnalyticsRoutes,
+                    ),
             },
             {
                 path: 'watchlist',
-                component: WatchlistHome,
-                title: 'Watchlist | DevPulse AI',
+                loadChildren: () =>
+                    import('./features/watchlists/watchlists.routes').then(
+                        (routes) => routes.watchlistsRoutes,
+                    ),
+            },
+            {
+                path: 'settings',
+                loadChildren: () =>
+                    import('./features/settings/settings.routes').then(
+                        (routes) => routes.settingsRoutes,
+                    ),
             },
         ],
     },

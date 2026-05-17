@@ -16,6 +16,10 @@ import { GithubRepository } from '../../models/github-repository.model';
 import { GithubSearchStore } from '../../stores/github-search.store';
 import { RepositoryCard } from '../../components/repository-card/repository-card';
 import { GithubWatchlistService } from '../../data-access/services/github-watchlist.service';
+import { ToastService } from '../../../../shared/services/toast.service';
+import { AppErrorState } from '../../../../shared/components/error-state/app-error-state/app-error-state';
+import { SkeletonCard } from '../../../../shared/components/loading/skeleton-card/skeleton-card';
+import { AppEmptyState } from '../../../../shared/components/empty-state/app-empty-state/app-empty-state';
 
 interface GithubSearchFormValue {
   readonly query: string;
@@ -29,7 +33,15 @@ interface GithubSearchFormValue {
 
 @Component({
   selector: 'app-github-search',
-  imports: [AsyncPipe, DecimalPipe, ReactiveFormsModule, RepositoryCard],
+  imports: [
+    AsyncPipe,
+    DecimalPipe,
+    ReactiveFormsModule,
+    RepositoryCard,
+    AppEmptyState,
+    AppErrorState,
+    SkeletonCard,
+  ],
   providers: [GithubSearchStore],
   templateUrl: './github-search.html',
   styleUrl: './github-search.css',
@@ -38,6 +50,7 @@ export class GithubSearch {
   private readonly formBuilder = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly githubWatchlistService = inject(GithubWatchlistService);
+  private readonly toastService = inject(ToastService);
 
   readonly store = inject(GithubSearchStore);
   readonly vm$ = this.store.vm$;
@@ -124,11 +137,37 @@ export class GithubSearch {
   }
 
   onSaveRepository(repository: GithubRepository): void {
-    this.githubWatchlistService.saveRepository(repository).subscribe();
+    this.githubWatchlistService.saveRepository(repository).subscribe({
+      next: () => {
+        this.toastService.success(
+          'Repository saved',
+          `${repository.fullName} was added to your watchlist.`,
+        );
+      },
+      error: () => {
+        this.toastService.error(
+          'Save failed',
+          'Unable to save repository to the watchlist.',
+        );
+      },
+    });
   }
 
   onRemoveRepository(repository: GithubRepository): void {
-    this.githubWatchlistService.removeRepository(repository).subscribe();
+    this.githubWatchlistService.removeRepository(repository).subscribe({
+      next: () => {
+        this.toastService.info(
+          'Repository removed',
+          `${repository.fullName} was removed from your watchlist.`,
+        );
+      },
+      error: () => {
+        this.toastService.error(
+          'Remove failed',
+          'Unable to remove repository from the watchlist.',
+        );
+      },
+    });
   }
 
   isRepositorySaved(

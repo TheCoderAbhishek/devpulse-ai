@@ -42,6 +42,9 @@
     </aside>
 
     <main class="flex min-h-screen flex-1 flex-col">
+      <app-offline-banner />
+      <app-rate-limit-banner />
+      <app-global-error-panel />
       <header class="border-b border-slate-800 bg-slate-950/80 px-6 py-4 backdrop-blur">
         <div class="flex items-center justify-between">
           <div>
@@ -63,3 +66,5 @@
     </main>
   </div>
 </div>
+<app-toast-container />
+<app-confirm-dialog />

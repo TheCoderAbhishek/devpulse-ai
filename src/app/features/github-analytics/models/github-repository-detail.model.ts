@@ -1,3 +1,4 @@
+import { CommunityTrendSignals } from '../../community-trends/models/community-trend-signals.model';
 import { StackOverflowInsights } from '../../stackoverflow-insights/models/stackoverflow-insights.model';
 import { GithubContributor } from './github-contributor.model';
 import { GithubReadme } from './github-readme.model';
@@ -12,5 +13,6 @@ export interface GithubRepositoryDetail {
     readonly contributors: readonly GithubContributor[];
     readonly health: GithubRepositoryHealth;
     readonly stackOverflowInsights?: StackOverflowInsights;
+    readonly communityTrendSignals?: CommunityTrendSignals;
     readonly loadedAt: string;
 }
