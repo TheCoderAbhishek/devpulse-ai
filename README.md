@@ -1,59 +1,66 @@
-# DevpulseAi
+# DevPulse AI
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.11.
+DevPulse AI is a frontend-only developer intelligence dashboard built with Angular, RxJS, Tailwind CSS, Axios, IndexedDB, and public APIs.
 
-## Development server
+It helps analyze open-source repositories using GitHub repository data, Stack Overflow questions, DEV Community articles, Hacker News stories, local watchlists, browser cache, and client-side trend scoring.
 
-To start a local development server, run:
+## Tech Stack
+
+- Angular latest
+- Standalone Components
+- RxJS
+- Signals
+- Tailwind CSS
+- Axios
+- Dexie / IndexedDB
+- Vitest-based Angular testing
+- Public APIs only
+- No custom backend
+- No database server
+
+## Core Features
+
+- GitHub repository search
+- Repository detail page
+- Repository health score
+- Watchlist saved in IndexedDB
+- Stack Overflow insights
+- DEV Community trend signals
+- Hacker News trend matching
+- Offline-friendly cache foundation
+- Settings page for tokens, cache, theme, and diagnostics
+- Toast notifications
+- Confirm dialogs
+- Global error handling
+- SEO metadata
+- Lazy-loaded routes
+
+## Public APIs Used
+
+- GitHub REST API
+- Stack Exchange API
+- DEV Community / Forem API
+- Hacker News Firebase API
+
+## Frontend-Only Architecture
+
+This project does not use:
+
+- Custom backend APIs
+- Node.js backend
+- Express / NestJS
+- Custom database server
+- Firebase backend logic
+- Supabase database features
+
+All persistence is handled through:
+
+- IndexedDB
+- LocalStorage
+- Browser cache patterns
+
+## Installation
 
 ```bash
-ng serve
+npm install
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

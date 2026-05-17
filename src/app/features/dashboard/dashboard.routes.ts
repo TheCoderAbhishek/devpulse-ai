@@ -7,6 +7,14 @@ export const dashboardRoutes: Routes = [
             import('./pages/dashboard-home/dashboard-home').then(
                 (component) => component.DashboardHome,
             ),
-        title: 'Dashboard | DevPulse AI',
+        title: 'Dashboard',
+        data: {
+            seo: {
+                title: 'Developer Intelligence Dashboard',
+                description:
+                    'Track repository health, watchlist analytics, and community trend signals in DevPulse AI.',
+                keywords: ['GitHub analytics', 'developer dashboard', 'repository health'],
+            },
+        },
     },
 ];
