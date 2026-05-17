@@ -1,5 +1,12 @@
 # DevPulse AI
 
+> Frontend-only developer intelligence dashboard built with Angular, RxJS, Tailwind CSS, Axios, IndexedDB, public APIs, and deployed on Microsoft Azure Static Web Apps.
+
+## Live Demo
+
+```text
+https://ashy-forest-00a623f00.7.azurestaticapps.net
+
 DevPulse AI is a frontend-only developer intelligence dashboard built with Angular, RxJS, Tailwind CSS, Axios, IndexedDB, and public APIs.
 
 It helps analyze open-source repositories using GitHub repository data, Stack Overflow questions, DEV Community articles, Hacker News stories, local watchlists, browser cache, and client-side trend scoring.
