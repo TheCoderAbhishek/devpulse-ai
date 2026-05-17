@@ -1,70 +1,147 @@
-<div class="min-h-screen bg-slate-950 text-slate-100">
+<div class="min-h-screen text-slate-100">
+  <div class="pointer-events-none fixed inset-0 -z-10 soft-grid-bg opacity-40"></div>
+
   <div class="flex min-h-screen">
-    <aside class="hidden w-72 border-r border-slate-800 bg-slate-900/80 px-5 py-6 lg:block">
-      <div class="mb-8">
-        <h1 class="text-xl font-bold tracking-tight text-white">DevPulse AI</h1>
-        <p class="mt-1 text-sm text-slate-400">Open-source developer intelligence</p>
+    <aside
+      class="hidden w-76 border-r border-white/10 bg-slate-950/70 px-5 py-6 backdrop-blur-2xl lg:block"
+    >
+      <div class="flex items-center gap-3">
+        <div
+          class="flex h-11 w-11 items-center justify-center rounded-2xl bg-linear-to-br from-blue-500 via-violet-500 to-cyan-400 shadow-lg shadow-blue-950/40"
+        >
+          <lucide-angular [img]="Sparkles" class="h-5 w-5 text-white" />
+        </div>
+
+        <div>
+          <p class="text-base font-bold tracking-tight text-white">DevPulse AI</p>
+          <p class="text-xs text-slate-400">Developer Intelligence</p>
+        </div>
       </div>
 
-      <nav class="space-y-2">
+      <nav class="mt-8 space-y-2">
         <a
           routerLink="/dashboard"
-          routerLinkActive="bg-blue-600 text-white"
-          class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
+          routerLinkActive="border-blue-500/60 bg-blue-500/15 text-white shadow-lg shadow-blue-950/20"
+          class="group flex items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-sm font-medium text-slate-400 transition hover:border-white/10 hover:bg-white/5 hover:text-white"
         >
+          <lucide-angular [img]="Home" class="h-4 w-4" />
           Dashboard
         </a>
 
         <a
           routerLink="/github"
-          routerLinkActive="bg-blue-600 text-white"
-          class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
+          routerLinkActive="border-blue-500/60 bg-blue-500/15 text-white shadow-lg shadow-blue-950/20"
+          class="group flex items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-sm font-medium text-slate-400 transition hover:border-white/10 hover:bg-white/5 hover:text-white"
         >
+          <lucide-angular [img]="Github" class="h-4 w-4" />
           GitHub Analytics
         </a>
 
         <a
           routerLink="/watchlist"
-          routerLinkActive="bg-blue-600 text-white"
-          class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
+          routerLinkActive="border-blue-500/60 bg-blue-500/15 text-white shadow-lg shadow-blue-950/20"
+          class="group flex items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-sm font-medium text-slate-400 transition hover:border-white/10 hover:bg-white/5 hover:text-white"
         >
+          <lucide-angular [img]="Bookmark" class="h-4 w-4" />
           Watchlist
         </a>
 
         <a
           routerLink="/settings"
-          routerLinkActive="bg-blue-600 text-white"
-          class="block rounded-xl px-4 py-3 text-sm font-medium text-slate-300 transition hover:bg-slate-800 hover:text-white"
+          routerLinkActive="border-blue-500/60 bg-blue-500/15 text-white shadow-lg shadow-blue-950/20"
+          class="group flex items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-sm font-medium text-slate-400 transition hover:border-white/10 hover:bg-white/5 hover:text-white"
         >
+          <lucide-angular [img]="Settings" class="h-4 w-4" />
           Settings
         </a>
       </nav>
+
+      <div class="mt-8 rounded-3xl border border-blue-500/20 bg-blue-500/10 p-4">
+        <div class="flex items-center gap-2 text-blue-200">
+          <lucide-angular [img]="BarChart3" class="h-4 w-4" />
+          <p class="text-sm font-semibold">Portfolio-grade app</p>
+        </div>
+
+        <p class="mt-2 text-xs leading-5 text-slate-400">
+          Angular, RxJS, IndexedDB, public APIs, Azure-ready deployment.
+        </p>
+      </div>
     </aside>
 
     <main class="flex min-h-screen flex-1 flex-col">
       <app-offline-banner />
       <app-rate-limit-banner />
       <app-global-error-panel />
-      <header class="border-b border-slate-800 bg-slate-950/80 px-6 py-4 backdrop-blur">
-        <div class="flex items-center justify-between">
+
+      <header
+        class="sticky top-0 z-30 border-b border-white/10 bg-slate-950/70 px-4 py-4 backdrop-blur-2xl sm:px-6"
+      >
+        <div class="flex items-center justify-between gap-4">
           <div>
-            <p class="text-sm text-slate-400">Frontend-only intelligence platform</p>
-            <h2 class="text-lg font-semibold text-white">Developer Ecosystem Command Center</h2>
+            <p class="text-xs font-semibold uppercase tracking-[0.28em] text-blue-300">
+              DevPulse AI
+            </p>
+
+            <h1 class="mt-1 text-lg font-bold tracking-tight text-white sm:text-xl">
+              Open-source intelligence workspace
+            </h1>
           </div>
 
-          <div
-            class="rounded-full border border-slate-700 px-4 py-2 text-xs font-medium text-slate-300"
-          >
-            No Backend · Public APIs · IndexedDB
+          <div class="flex items-center gap-3">
+            <app-theme-toggle />
+
+            <a
+              routerLink="/github"
+              class="hidden rounded-2xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-950/30 transition hover:bg-blue-500 sm:inline-flex"
+            >
+              Analyze Repository
+            </a>
           </div>
         </div>
+
+        <nav class="mt-4 grid grid-cols-4 gap-2 lg:hidden">
+          <a
+            routerLink="/dashboard"
+            routerLinkActive="bg-blue-600 text-white"
+            class="flex items-center justify-center rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-300"
+          >
+            <lucide-angular [img]="Home" class="h-4 w-4" />
+          </a>
+
+          <a
+            routerLink="/github"
+            routerLinkActive="bg-blue-600 text-white"
+            class="flex items-center justify-center rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-300"
+          >
+            <lucide-angular [img]="Github" class="h-4 w-4" />
+          </a>
+
+          <a
+            routerLink="/watchlist"
+            routerLinkActive="bg-blue-600 text-white"
+            class="flex items-center justify-center rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-300"
+          >
+            <lucide-angular [img]="Bookmark" class="h-4 w-4" />
+          </a>
+
+          <a
+            routerLink="/settings"
+            routerLinkActive="bg-blue-600 text-white"
+            class="flex items-center justify-center rounded-xl border border-white/10 px-3 py-2 text-xs text-slate-300"
+          >
+            <lucide-angular [img]="Settings" class="h-4 w-4" />
+          </a>
+        </nav>
       </header>
 
-      <section class="flex-1 px-6 py-6">
-        <router-outlet />
+      <section class="flex-1 px-4 py-6 sm:px-6 lg:px-8">
+        <div class="page-enter mx-auto max-w-7xl">
+          <router-outlet />
+        </div>
       </section>
     </main>
   </div>
 </div>
+
 <app-toast-container />
 <app-confirm-dialog />
