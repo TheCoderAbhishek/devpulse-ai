@@ -5,6 +5,9 @@
     "ng": "ng",
     "start": "ng serve -o",
     "build": "ng build",
+    "build:prod": "ng build",
+    "build:stats": "ng build --stats-json",
+    "analyze": "npx source-map-explorer \"dist/devpulse-ai/**/*.js\"",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
