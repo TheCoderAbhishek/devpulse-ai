@@ -8,9 +8,9 @@
         ← Back to GitHub Search
       </a>
 
-      <h1 class="mt-3 text-3xl font-bold tracking-tight text-white">Repository Detail</h1>
+      <h1 class="mt-3 text-3xl font-bold tracking-tight premium-title">Repository Detail</h1>
 
-      <p class="mt-2 text-slate-400">
+      <p class="mt-2 premium-muted">
         Detailed repository intelligence powered by GitHub public APIs and cached locally.
       </p>
     </div>
@@ -27,7 +27,7 @@
   @if (vm$ | async; as vm) {
     @if (vm.status === 'loading') {
       <section class="space-y-4">
-        <div class="animate-pulse rounded-2xl border border-slate-800 bg-slate-900 p-6">
+        <div class="animate-pulse premium-card rounded-3xl p-6">
           <div class="h-6 w-1/3 rounded bg-slate-800"></div>
           <div class="mt-4 h-4 w-2/3 rounded bg-slate-800"></div>
           <div class="mt-3 h-4 w-1/2 rounded bg-slate-800"></div>
@@ -35,7 +35,7 @@
 
         <div class="grid gap-4 md:grid-cols-4">
           @for (item of [1, 2, 3, 4]; track item) {
-            <div class="animate-pulse rounded-2xl border border-slate-800 bg-slate-900 p-5">
+            <div class="animate-pulse premium-card rounded-3xl p-5">
               <div class="h-4 w-1/2 rounded bg-slate-800"></div>
               <div class="mt-4 h-7 w-1/3 rounded bg-slate-800"></div>
             </div>
@@ -54,7 +54,7 @@
 
         <button
           type="button"
-          class="mt-4 rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-500"
+          class="mt-4 rounded-xl bg-red-600 px-5 py-3 text-sm font-semibold premium-title transition hover:bg-red-500"
           (click)="onRefresh()"
         >
           Retry
@@ -64,7 +64,7 @@
 
     @if (vm.status === 'success') {
       @if (savedRepositoryExternalIds$ | async; as savedRepositoryExternalIds) {
-        <section class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+        <section class="premium-card rounded-3xl p-6">
           <div class="flex flex-col justify-between gap-5 xl:flex-row">
             <div class="min-w-0">
               <div class="flex items-start gap-4">
@@ -84,7 +84,7 @@
                     {{ vm.detail.repository.fullName }}
                   </a>
 
-                  <p class="mt-2 max-w-4xl text-sm leading-6 text-slate-400">
+                  <p class="mt-2 max-w-4xl text-sm leading-6 premium-muted">
                     {{ vm.detail.repository.description || 'No description provided.' }}
                   </p>
 
@@ -169,7 +169,7 @@
                 [href]="vm.detail.repository.url"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="rounded-xl bg-blue-600 px-5 py-3 text-center text-sm font-semibold text-white transition hover:bg-blue-500"
+                class="rounded-xl bg-blue-600 px-5 py-3 text-center text-sm font-semibold premium-title transition hover:bg-blue-500"
               >
                 Open in GitHub
               </a>
@@ -178,30 +178,30 @@
         </section>
 
         <section class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-            <p class="text-sm text-slate-400">Stars</p>
-            <p class="mt-3 text-3xl font-bold text-white">
+          <div class="premium-card rounded-3xl p-5">
+            <p class="text-sm premium-muted">Stars</p>
+            <p class="mt-3 text-3xl font-bold premium-title">
               {{ vm.detail.repository.stars | number }}
             </p>
           </div>
 
-          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-            <p class="text-sm text-slate-400">Forks</p>
-            <p class="mt-3 text-3xl font-bold text-white">
+          <div class="premium-card rounded-3xl p-5">
+            <p class="text-sm premium-muted">Forks</p>
+            <p class="mt-3 text-3xl font-bold premium-title">
               {{ vm.detail.repository.forks | number }}
             </p>
           </div>
 
-          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-            <p class="text-sm text-slate-400">Open Issues</p>
-            <p class="mt-3 text-3xl font-bold text-white">
+          <div class="premium-card rounded-3xl p-5">
+            <p class="text-sm premium-muted">Open Issues</p>
+            <p class="mt-3 text-3xl font-bold premium-title">
               {{ vm.detail.repository.openIssues | number }}
             </p>
           </div>
 
-          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-            <p class="text-sm text-slate-400">Contributors Loaded</p>
-            <p class="mt-3 text-3xl font-bold text-white">
+          <div class="premium-card rounded-3xl p-5">
+            <p class="text-sm premium-muted">Contributors Loaded</p>
+            <p class="mt-3 text-3xl font-bold premium-title">
               {{ vm.detail.contributors.length | number }}
             </p>
           </div>
@@ -210,12 +210,12 @@
         <section class="grid gap-6 xl:grid-cols-[1fr_1fr]">
           <app-repository-health-card [health]="vm.detail.health" />
 
-          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <h2 class="text-lg font-semibold text-white">README Metadata</h2>
+          <div class="premium-card rounded-3xl p-6">
+            <h2 class="text-lg font-semibold premium-title">README Metadata</h2>
 
             @if (vm.detail.readme) {
               <div class="mt-4 space-y-3">
-                <p class="text-sm text-slate-400">
+                <p class="text-sm premium-muted">
                   File:
                   <a
                     [href]="vm.detail.readme.htmlUrl"
@@ -227,9 +227,9 @@
                   </a>
                 </p>
 
-                <p class="text-sm text-slate-400">
+                <p class="text-sm premium-muted">
                   Size:
-                  <span class="font-semibold text-white">
+                  <span class="font-semibold premium-title">
                     {{ vm.detail.readme.size | number }} bytes
                   </span>
                 </p>
@@ -242,7 +242,7 @@
                 }
               </div>
             } @else {
-              <p class="mt-4 text-sm text-slate-400">
+              <p class="mt-4 text-sm premium-muted">
                 README metadata was not available for this repository.
               </p>
             }
@@ -252,14 +252,14 @@
         @if (vm.detail.stackOverflowInsights) {
           <app-stackoverflow-insights-card [insights]="vm.detail.stackOverflowInsights" />
         } @else {
-          <section class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+          <section class="premium-card rounded-3xl p-6">
             <p class="text-sm font-medium text-orange-300">Stack Overflow Insights</p>
 
-            <h2 class="mt-2 text-lg font-semibold text-white">
+            <h2 class="mt-2 text-lg font-semibold premium-title">
               Developer Question Insights Unavailable
             </h2>
 
-            <p class="mt-2 text-sm leading-6 text-slate-400">
+            <p class="mt-2 text-sm leading-6 premium-muted">
               GitHub repository details loaded successfully, but Stack Overflow insights were not
               available. This may happen because of API throttling, network restrictions, missing
               related tags, or temporary Stack Exchange API limits.
@@ -270,14 +270,14 @@
         @if (vm.detail.communityTrendSignals) {
           <app-community-trend-signals-card [signals]="vm.detail.communityTrendSignals" />
         } @else {
-          <section class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+          <section class="premium-card rounded-3xl p-6">
             <p class="text-sm font-medium text-purple-300">Community Trend Signals</p>
 
-            <h2 class="mt-2 text-lg font-semibold text-white">
+            <h2 class="mt-2 text-lg font-semibold premium-title">
               DEV Community and Hacker News Signals Unavailable
             </h2>
 
-            <p class="mt-2 text-sm leading-6 text-slate-400">
+            <p class="mt-2 text-sm leading-6 premium-muted">
               Repository details loaded successfully, but DEV Community and Hacker News signal
               enrichment was unavailable. This can happen because of network restrictions, keyword
               mismatch, or temporary source limitations.
@@ -286,11 +286,11 @@
         }
 
         <section class="grid gap-6 xl:grid-cols-2">
-          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <h2 class="text-lg font-semibold text-white">Recent Releases</h2>
+          <div class="premium-card rounded-3xl p-6">
+            <h2 class="text-lg font-semibold premium-title">Recent Releases</h2>
 
             @if (vm.detail.releases.length === 0) {
-              <p class="mt-4 text-sm text-slate-400">No recent releases found.</p>
+              <p class="mt-4 text-sm premium-muted">No recent releases found.</p>
             } @else {
               <div class="mt-4 space-y-3">
                 @for (release of vm.detail.releases; track release.id) {
@@ -304,7 +304,7 @@
                       {{ release.name || release.tagName }}
                     </p>
 
-                    <p class="mt-1 text-xs text-slate-500">
+                    <p class="mt-1 text-xs premium-muted">
                       Published {{ release.publishedAt | date: 'mediumDate' }}
                     </p>
 
@@ -321,11 +321,11 @@
             }
           </div>
 
-          <div class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-            <h2 class="text-lg font-semibold text-white">Top Contributors</h2>
+          <div class="premium-card rounded-3xl p-6">
+            <h2 class="text-lg font-semibold premium-title">Top Contributors</h2>
 
             @if (vm.detail.contributors.length === 0) {
-              <p class="mt-4 text-sm text-slate-400">Contributor data was not available.</p>
+              <p class="mt-4 text-sm premium-muted">Contributor data was not available.</p>
             } @else {
               <div class="mt-4 grid gap-3 sm:grid-cols-2">
                 @for (contributor of vm.detail.contributors; track contributor.id) {
@@ -333,7 +333,7 @@
                     [href]="contributor.profileUrl"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-950 p-3 transition hover:border-blue-700"
+                    class="flex items-center gap-3 premium-metric-card transition hover:border-blue-700"
                   >
                     <img
                       [src]="contributor.avatarUrl"
@@ -343,10 +343,10 @@
                     />
 
                     <div class="min-w-0">
-                      <p class="truncate text-sm font-semibold text-white">
+                      <p class="truncate text-sm font-semibold premium-title">
                         {{ contributor.username }}
                       </p>
-                      <p class="text-xs text-slate-500">
+                      <p class="text-xs premium-muted">
                         {{ contributor.contributions | number }} contributions
                       </p>
                     </div>

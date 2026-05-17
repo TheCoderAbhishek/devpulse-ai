@@ -1,34 +1,42 @@
 <div class="space-y-6">
-  <section>
-    <p class="text-sm font-medium text-blue-400">Watchlist</p>
+  <section class="premium-card rounded-3xl p-6 sm:p-8">
+    <div class="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+      <div>
+        <p class="premium-page-kicker">Watchlist</p>
 
-    <h1 class="mt-2 text-3xl font-bold tracking-tight text-white">Tracked Repositories</h1>
+        <h1 class="mt-3 text-3xl font-black tracking-tight premium-title sm:text-5xl">
+          Tracked <span class="gradient-text">Repositories</span>
+        </h1>
 
-    <p class="mt-3 max-w-3xl text-slate-400">
-      Repositories saved from GitHub search are stored locally in IndexedDB. No backend, database
-      server, or account is required.
-    </p>
+        <p class="mt-4 max-w-3xl text-base leading-7 premium-muted">
+          Repositories saved from GitHub search are stored locally in IndexedDB. No backend,
+          database server, or account is required.
+        </p>
+      </div>
+
+      <a routerLink="/github" class="premium-primary-button w-fit"> Add Repository </a>
+    </div>
   </section>
 
   <section class="grid gap-4 md:grid-cols-3">
-    <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-      <p class="text-sm text-slate-400">Tracked Repositories</p>
-      <p class="mt-3 text-3xl font-bold text-white">
+    <div class="premium-metric-card premium-card-hover">
+      <p class="text-sm premium-muted">Tracked Repositories</p>
+      <p class="mt-3 text-4xl font-black premium-title">
         {{ (trackedRepositoryCount$ | async) ?? 0 }}
       </p>
-      <p class="mt-2 text-xs text-slate-500">Persisted locally using IndexedDB</p>
+      <p class="mt-2 premium-help-text">Persisted locally using IndexedDB</p>
     </div>
 
-    <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-      <p class="text-sm text-slate-400">Storage Mode</p>
-      <p class="mt-3 text-3xl font-bold text-emerald-400">Local</p>
-      <p class="mt-2 text-xs text-slate-500">Browser-only persistence</p>
+    <div class="premium-metric-card premium-card-hover">
+      <p class="text-sm premium-muted">Storage Mode</p>
+      <p class="mt-3 text-4xl font-black text-emerald-300">Local</p>
+      <p class="mt-2 premium-help-text">Browser-only persistence</p>
     </div>
 
-    <div class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
-      <p class="text-sm text-slate-400">Backend Services</p>
-      <p class="mt-3 text-3xl font-bold text-emerald-400">0</p>
-      <p class="mt-2 text-xs text-slate-500">Strict frontend-only architecture</p>
+    <div class="premium-metric-card premium-card-hover">
+      <p class="text-sm premium-muted">Backend Services</p>
+      <p class="mt-3 text-4xl font-black text-violet-300">0</p>
+      <p class="mt-2 premium-help-text">Strict frontend-only architecture</p>
     </div>
   </section>
 
@@ -38,46 +46,38 @@
     }
 
     @if (watchlistItems.length === 0) {
-      <section class="rounded-2xl border border-slate-800 bg-slate-900 p-8 text-center">
-        <h2 class="text-xl font-semibold text-white">No repositories tracked yet</h2>
-
-        <p class="mx-auto mt-3 max-w-2xl text-sm text-slate-400">
-          Go to GitHub Analytics, search for repositories, and click Save on repositories you want
-          to monitor.
-        </p>
-
-        <a
-          routerLink="/github"
-          class="mt-5 inline-flex rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
-        >
-          Search GitHub Repositories
-        </a>
-      </section>
+      <app-empty-state
+        title="No repositories tracked yet"
+        description="Go to GitHub Analytics, search for repositories, and save the projects you want to monitor."
+        actionLabel="Search GitHub Repositories"
+      >
+        <a routerLink="/github" class="premium-primary-button"> Search GitHub Repositories </a>
+      </app-empty-state>
     } @else {
       <section class="grid gap-4">
         @for (item of watchlistItems; track item.id) {
-          <article class="rounded-2xl border border-slate-800 bg-slate-900 p-5">
+          <article class="premium-card premium-card-hover rounded-3xl p-5">
             <div class="flex flex-col justify-between gap-5 xl:flex-row">
               <div class="min-w-0 flex-1">
-                <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                  <div>
+                <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                  <div class="min-w-0">
                     @if (item.url) {
                       <a
                         [href]="item.url"
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="wrap-break-word text-lg font-semibold text-blue-400 transition hover:text-blue-300"
+                        class="wrap-break-word text-lg font-black text-blue-300 transition hover:text-blue-200"
                       >
                         {{ item.title }}
                       </a>
                     } @else {
-                      <h2 class="wrap-break-word text-lg font-semibold text-white">
+                      <h2 class="wrap-break-word text-lg font-black premium-title">
                         {{ item.title }}
                       </h2>
                     }
 
                     @if (item.subtitle) {
-                      <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
+                      <p class="mt-2 max-w-3xl text-sm leading-6 premium-muted">
                         {{ item.subtitle }}
                       </p>
                     }
@@ -85,7 +85,7 @@
 
                   <button
                     type="button"
-                    class="rounded-xl border border-red-900 bg-red-950/40 px-4 py-2 text-xs font-semibold text-red-200 transition hover:bg-red-900/50"
+                    class="premium-danger-button w-fit"
                     (click)="removeItem(item)"
                   >
                     Remove
@@ -94,44 +94,40 @@
 
                 <div class="mt-4 flex flex-wrap gap-2">
                   @for (tag of item.tags.slice(0, 10); track tag) {
-                    <span
-                      class="rounded-full border border-slate-700 px-3 py-1 text-xs text-slate-400"
-                    >
-                      #{{ tag }}
-                    </span>
+                    <span class="premium-badge"> #{{ tag }} </span>
                   }
                 </div>
 
-                <p class="mt-4 text-xs text-slate-500">
+                <p class="mt-4 text-xs premium-muted">
                   Saved {{ item.createdAt | date: 'medium' }}
                 </p>
               </div>
 
               <div class="grid min-w-64 grid-cols-2 gap-3 sm:grid-cols-4 xl:grid-cols-2">
-                <div class="rounded-xl border border-slate-800 bg-slate-950 p-3">
-                  <p class="text-xs text-slate-500">Stars</p>
-                  <p class="mt-1 text-base font-semibold text-white">
+                <div class="premium-metric-card">
+                  <p class="text-xs premium-muted">Stars</p>
+                  <p class="mt-1 text-base font-black premium-title">
                     {{ getNumberMetric(item, 'stars') | number }}
                   </p>
                 </div>
 
-                <div class="rounded-xl border border-slate-800 bg-slate-950 p-3">
-                  <p class="text-xs text-slate-500">Forks</p>
-                  <p class="mt-1 text-base font-semibold text-white">
+                <div class="premium-metric-card">
+                  <p class="text-xs premium-muted">Forks</p>
+                  <p class="mt-1 text-base font-black premium-title">
                     {{ getNumberMetric(item, 'forks') | number }}
                   </p>
                 </div>
 
-                <div class="rounded-xl border border-slate-800 bg-slate-950 p-3">
-                  <p class="text-xs text-slate-500">Issues</p>
-                  <p class="mt-1 text-base font-semibold text-white">
+                <div class="premium-metric-card">
+                  <p class="text-xs premium-muted">Issues</p>
+                  <p class="mt-1 text-base font-black premium-title">
                     {{ getNumberMetric(item, 'openIssues') | number }}
                   </p>
                 </div>
 
-                <div class="rounded-xl border border-slate-800 bg-slate-950 p-3">
-                  <p class="text-xs text-slate-500">Language</p>
-                  <p class="mt-1 text-base font-semibold text-white">
+                <div class="premium-metric-card">
+                  <p class="text-xs premium-muted">Language</p>
+                  <p class="mt-1 text-base font-black premium-title">
                     {{ getTextMetric(item, 'language') }}
                   </p>
                 </div>

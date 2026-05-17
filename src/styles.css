@@ -309,3 +309,95 @@ html[data-theme='light'] .premium-select {
   font-size: 0.75rem;
   line-height: 1.5;
 }
+
+.premium-danger-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.14);
+  padding: 0.8rem 1.25rem;
+  color: #fecaca;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.premium-danger-button:hover {
+  transform: translateY(-1px);
+  border-color: rgba(239, 68, 68, 0.6);
+  background: rgba(239, 68, 68, 0.22);
+}
+
+.premium-warning-panel {
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: 1.5rem;
+  background: rgba(245, 158, 11, 0.12);
+  padding: 1rem;
+  color: #fde68a;
+  backdrop-filter: blur(18px);
+}
+
+.premium-danger-panel {
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  border-radius: 1.5rem;
+  background: rgba(239, 68, 68, 0.12);
+  padding: 1rem;
+  color: #fecaca;
+  backdrop-filter: blur(18px);
+}
+
+.premium-success-panel {
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: 1.5rem;
+  background: rgba(16, 185, 129, 0.12);
+  padding: 1rem;
+  color: #bbf7d0;
+  backdrop-filter: blur(18px);
+}
+
+.premium-section-heading {
+  color: var(--app-text);
+  font-size: 1.125rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.premium-section-description {
+  margin-top: 0.5rem;
+  color: var(--app-text-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.premium-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--app-border-strong), transparent);
+}
+
+.premium-link {
+  color: #93c5fd;
+  font-weight: 700;
+  transition: color 180ms ease;
+}
+
+.premium-link:hover {
+  color: #bfdbfe;
+}
+
+.premium-scroll-panel {
+  max-height: 20rem;
+  overflow: auto;
+  border-radius: 1rem;
+  border: 1px solid var(--app-border);
+  background: rgba(15, 23, 42, 0.5);
+  padding: 1rem;
+}
+
+html[data-theme='light'] .premium-scroll-panel {
+  background: rgba(255, 255, 255, 0.66);
+}

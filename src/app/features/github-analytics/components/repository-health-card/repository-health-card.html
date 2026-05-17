@@ -1,53 +1,57 @@
-<section class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
-  <div class="flex flex-col justify-between gap-5 lg:flex-row lg:items-start">
+<section class="premium-card rounded-3xl p-6">
+  <div class="flex flex-col justify-between gap-6 lg:flex-row lg:items-start">
     <div>
-      <h2 class="text-lg font-semibold text-white">Repository Health Score</h2>
+      <p class="premium-page-kicker">Repository Health</p>
 
-      <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
+      <h2 class="mt-2 text-2xl font-black tracking-tight premium-title">
+        Health Score & Risk Signals
+      </h2>
+
+      <p class="mt-3 max-w-3xl text-sm leading-6 premium-muted">
         {{ health.summary }}
       </p>
 
-      <p class="mt-2 text-xs text-slate-500">Calculated {{ health.calculatedAt }}</p>
+      <p class="mt-2 text-xs premium-muted">Calculated {{ health.calculatedAt }}</p>
     </div>
 
     <div
-      class="rounded-2xl border px-6 py-5 text-center"
-      [class.border-emerald-700]="isExcellent(health.level)"
-      [class.bg-emerald-950]="isExcellent(health.level)"
+      class="rounded-3xl border px-7 py-6 text-center shadow-xl"
+      [class.border-emerald-500/40]="isExcellent(health.level)"
+      [class.bg-emerald-500/15]="isExcellent(health.level)"
       [class.text-emerald-200]="isExcellent(health.level)"
-      [class.border-blue-700]="isGood(health.level)"
-      [class.bg-blue-950]="isGood(health.level)"
+      [class.border-blue-500/40]="isGood(health.level)"
+      [class.bg-blue-500/15]="isGood(health.level)"
       [class.text-blue-200]="isGood(health.level)"
-      [class.border-amber-700]="isModerate(health.level)"
-      [class.bg-amber-950]="isModerate(health.level)"
+      [class.border-amber-500/40]="isModerate(health.level)"
+      [class.bg-amber-500/15]="isModerate(health.level)"
       [class.text-amber-200]="isModerate(health.level)"
-      [class.border-red-700]="isRisky(health.level)"
-      [class.bg-red-950]="isRisky(health.level)"
+      [class.border-red-500/40]="isRisky(health.level)"
+      [class.bg-red-500/15]="isRisky(health.level)"
       [class.text-red-200]="isRisky(health.level)"
     >
-      <p class="text-4xl font-bold">
+      <p class="text-5xl font-black">
         {{ health.score | number }}
       </p>
 
-      <p class="mt-1 text-xs font-semibold uppercase tracking-wide">
+      <p class="mt-1 text-xs font-bold uppercase tracking-[0.22em]">
         {{ health.level }}
       </p>
     </div>
   </div>
 
   <div class="mt-6">
-    <div class="h-3 overflow-hidden rounded-full bg-slate-800">
+    <div class="h-3 overflow-hidden rounded-full bg-white/10">
       <div
         class="h-full rounded-full transition-all"
         [style.width.%]="health.score"
-        [class.bg-emerald-500]="isExcellent(health.level)"
-        [class.bg-blue-500]="isGood(health.level)"
-        [class.bg-amber-500]="isModerate(health.level)"
-        [class.bg-red-500]="isRisky(health.level)"
+        [class.bg-emerald-400]="isExcellent(health.level)"
+        [class.bg-blue-400]="isGood(health.level)"
+        [class.bg-amber-400]="isModerate(health.level)"
+        [class.bg-red-400]="isRisky(health.level)"
       ></div>
     </div>
 
-    <div class="mt-2 flex justify-between text-xs text-slate-500">
+    <div class="mt-2 flex justify-between text-xs premium-muted">
       <span>Risky</span>
       <span>Moderate</span>
       <span>Good</span>
@@ -57,32 +61,32 @@
 
   <div class="mt-6 grid gap-3 md:grid-cols-2 xl:grid-cols-3">
     @for (signal of health.signals; track signal.label) {
-      <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+      <div class="premium-metric-card">
         <div class="flex items-start justify-between gap-3">
           <div>
-            <p class="text-sm font-semibold text-white">
+            <p class="text-sm font-bold premium-title">
               {{ signal.label }}
             </p>
 
-            <p class="mt-1 text-xs leading-5 text-slate-500">
+            <p class="mt-1 text-xs leading-5 premium-muted">
               {{ signal.description }}
             </p>
           </div>
 
           <span
-            class="rounded-full px-3 py-1 text-xs font-semibold"
-            [class.bg-emerald-950]="signal.scoreImpact === 'positive'"
+            class="rounded-full px-3 py-1 text-xs font-bold"
+            [class.bg-emerald-500/15]="signal.scoreImpact === 'positive'"
             [class.text-emerald-200]="signal.scoreImpact === 'positive'"
-            [class.bg-slate-800]="signal.scoreImpact === 'neutral'"
+            [class.bg-white/10]="signal.scoreImpact === 'neutral'"
             [class.text-slate-300]="signal.scoreImpact === 'neutral'"
-            [class.bg-red-950]="signal.scoreImpact === 'negative'"
+            [class.bg-red-500/15]="signal.scoreImpact === 'negative'"
             [class.text-red-200]="signal.scoreImpact === 'negative'"
           >
             {{ signal.score }}/{{ signal.maxScore }}
           </span>
         </div>
 
-        <p class="mt-4 text-lg font-bold text-white">
+        <p class="mt-4 text-lg font-black premium-title">
           {{ signal.value }}
         </p>
       </div>
@@ -90,22 +94,22 @@
   </div>
 
   <div class="mt-6 grid gap-6 xl:grid-cols-2">
-    <div class="rounded-2xl border border-slate-800 bg-slate-950 p-5">
-      <h3 class="text-base font-semibold text-white">Risk Badges</h3>
+    <div class="premium-card rounded-3xl p-5">
+      <h3 class="premium-section-heading">Risk Badges</h3>
 
       <div class="mt-4 space-y-3">
         @for (badge of health.riskBadges; track badge.label) {
           <div
-            class="rounded-xl border p-4"
-            [class.border-emerald-800]="isLowSeverity(badge.severity)"
-            [class.bg-emerald-950]="isLowSeverity(badge.severity)"
-            [class.border-amber-800]="isMediumSeverity(badge.severity)"
-            [class.bg-amber-950]="isMediumSeverity(badge.severity)"
-            [class.border-red-800]="isHighSeverity(badge.severity)"
-            [class.bg-red-950]="isHighSeverity(badge.severity)"
+            class="rounded-2xl border p-4"
+            [class.border-emerald-500/30]="isLowSeverity(badge.severity)"
+            [class.bg-emerald-500/10]="isLowSeverity(badge.severity)"
+            [class.border-amber-500/30]="isMediumSeverity(badge.severity)"
+            [class.bg-amber-500/10]="isMediumSeverity(badge.severity)"
+            [class.border-red-500/30]="isHighSeverity(badge.severity)"
+            [class.bg-red-500/10]="isHighSeverity(badge.severity)"
           >
             <p
-              class="text-sm font-semibold"
+              class="text-sm font-bold"
               [class.text-emerald-200]="isLowSeverity(badge.severity)"
               [class.text-amber-200]="isMediumSeverity(badge.severity)"
               [class.text-red-200]="isHighSeverity(badge.severity)"
@@ -113,7 +117,7 @@
               {{ badge.label }}
             </p>
 
-            <p class="mt-1 text-xs leading-5 text-slate-300">
+            <p class="mt-1 text-xs leading-5 premium-muted">
               {{ badge.description }}
             </p>
           </div>
@@ -121,12 +125,12 @@
       </div>
     </div>
 
-    <div class="rounded-2xl border border-slate-800 bg-slate-950 p-5">
-      <h3 class="text-base font-semibold text-white">Technical Recommendations</h3>
+    <div class="premium-card rounded-3xl p-5">
+      <h3 class="premium-section-heading">Technical Recommendations</h3>
 
       <ul class="mt-4 space-y-3">
         @for (recommendation of health.recommendations; track recommendation) {
-          <li class="flex gap-3 text-sm leading-6 text-slate-300">
+          <li class="flex gap-3 text-sm leading-6 premium-muted">
             <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-blue-400"></span>
             <span>{{ recommendation }}</span>
           </li>

@@ -1,12 +1,14 @@
 <div class="space-y-6">
-  <section>
-    <p class="text-sm font-medium text-blue-400">Settings</p>
+  <section class="premium-card rounded-3xl p-6 sm:p-8">
+    <p class="premium-page-kicker">Settings</p>
 
-    <h1 class="mt-2 text-3xl font-bold tracking-tight text-white">Application Configuration</h1>
+    <h1 class="mt-3 text-3xl font-black tracking-tight premium-title sm:text-5xl">
+      Application <span class="gradient-text">Configuration</span>
+    </h1>
 
-    <p class="mt-3 max-w-3xl text-slate-400">
-      Manage local preferences, optional provider tokens, cache controls, browser storage, and
-      frontend-only diagnostics.
+    <p class="mt-4 max-w-3xl text-base leading-7 premium-muted">
+      Manage local preferences, optional provider tokens, cache controls, browser storage,
+      diagnostics, and frontend-only security settings.
     </p>
   </section>
 
@@ -14,7 +16,7 @@
     title="Frontend-Only Security Warning"
     description="DevPulse AI does not use a custom backend. Any token saved here is stored locally in your browser and cannot be fully hidden from the local browser environment."
   >
-    <div class="rounded-xl border border-amber-800 bg-amber-950/40 p-4">
+    <div class="premium-warning-panel">
       <p class="text-sm font-semibold text-amber-200">
         Use only personal, minimal-scope, revocable tokens.
       </p>
@@ -136,12 +138,12 @@
               type="password"
               formControlName="github"
               placeholder="Paste GitHub token"
-              class="min-w-72 rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
+              class="premium-input min-w-72"
             />
 
             <button
               type="button"
-              class="rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+              class="premium-primary-button"
               (click)="saveGithubToken()"
             >
               Save
@@ -149,7 +151,7 @@
 
             <button
               type="button"
-              class="rounded-xl border border-red-900 bg-red-950/40 px-5 py-3 text-sm font-semibold text-red-200 transition hover:bg-red-900/50"
+              class="premium-danger-button"
               (click)="removeGithubToken()"
             >
               Remove
@@ -180,12 +182,12 @@
               type="password"
               formControlName="devTo"
               placeholder="Paste DEV token"
-              class="min-w-72 rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
+              class="premium-input min-w-72"
             />
 
             <button
               type="button"
-              class="rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+              class="premium-primary-button"
               (click)="saveDevToken()"
             >
               Save
@@ -193,7 +195,7 @@
 
             <button
               type="button"
-              class="rounded-xl border border-red-900 bg-red-950/40 px-5 py-3 text-sm font-semibold text-red-200 transition hover:bg-red-900/50"
+              class="premium-danger-button"
               (click)="removeDevToken()"
             >
               Remove
@@ -224,12 +226,12 @@
               type="password"
               formControlName="ai"
               placeholder="Paste AI provider token"
-              class="min-w-72 rounded-xl border border-slate-700 bg-slate-900 px-4 py-3 text-sm text-white outline-none transition placeholder:text-slate-500 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30"
+              class="premium-input min-w-72"
             />
 
             <button
               type="button"
-              class="rounded-xl bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-500"
+              class="premium-primary-button"
               (click)="saveAiToken()"
             >
               Save
@@ -237,7 +239,7 @@
 
             <button
               type="button"
-              class="rounded-xl border border-red-900 bg-red-950/40 px-5 py-3 text-sm font-semibold text-red-200 transition hover:bg-red-900/50"
+              class="premium-danger-button"
               (click)="removeAiToken()"
             >
               Remove
@@ -250,7 +252,7 @@
     <div class="mt-5">
       <button
         type="button"
-        class="rounded-xl border border-red-900 bg-red-950/40 px-5 py-3 text-sm font-semibold text-red-200 transition hover:bg-red-900/50"
+        class="premium-danger-button"
         (click)="clearAllTokens()"
       >
         Clear All Provider Tokens
@@ -264,28 +266,28 @@
   >
     @if (storageStats$ | async; as stats) {
       <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+        <div class="premium-metric-card">
           <p class="text-sm text-slate-400">API Cache Records</p>
           <p class="mt-3 text-3xl font-bold text-white">
             {{ stats.apiCacheCount }}
           </p>
         </div>
 
-        <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+        <div class="premium-metric-card">
           <p class="text-sm text-slate-400">Watchlist Items</p>
           <p class="mt-3 text-3xl font-bold text-white">
             {{ stats.watchlistCount }}
           </p>
         </div>
 
-        <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+        <div class="premium-metric-card">
           <p class="text-sm text-slate-400">Bookmarks</p>
           <p class="mt-3 text-3xl font-bold text-white">
             {{ stats.bookmarkCount }}
           </p>
         </div>
 
-        <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+        <div class="premium-metric-card">
           <p class="text-sm text-slate-400">Dashboard Layouts</p>
           <p class="mt-3 text-3xl font-bold text-white">
             {{ stats.dashboardLayoutCount }}
@@ -313,7 +315,7 @@
 
       <button
         type="button"
-        class="rounded-xl border border-red-900 bg-red-950/40 px-5 py-3 text-sm font-semibold text-red-200 transition hover:bg-red-900/50"
+        class="premium-danger-button"
         (click)="clearAllIndexedDbData()"
       >
         Clear All IndexedDB Data
@@ -354,7 +356,7 @@
       } @else {
         <div class="space-y-3">
           @for (provider of rateLimitSnapshot().providers | keyvalue; track provider.key) {
-            <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
+            <div class="premium-metric-card">
               <div class="flex flex-col justify-between gap-3 md:flex-row md:items-center">
                 <div>
                   <p class="font-semibold text-white">

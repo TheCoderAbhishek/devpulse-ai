@@ -1,11 +1,11 @@
-<section class="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+<section class="premium-card rounded-3xl p-6">
   <div class="flex flex-col justify-between gap-4 lg:flex-row lg:items-start">
     <div>
       <p class="text-sm font-medium text-orange-300">Stack Overflow Insights</p>
 
-      <h2 class="mt-2 text-lg font-semibold text-white">Developer Questions & Pain Points</h2>
+      <h2 class="mt-2 text-lg font-semibold premium-title">Developer Questions & Pain Points</h2>
 
-      <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-400">
+      <p class="mt-2 max-w-3xl text-sm leading-6 premium-muted">
         Related questions are fetched from Stack Exchange public APIs using repository language and
         topic signals.
       </p>
@@ -23,39 +23,39 @@
   </div>
 
   <div class="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-    <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
-      <p class="text-sm text-slate-400">Questions Loaded</p>
-      <p class="mt-3 text-3xl font-bold text-white">
+    <div class="premium-metric-card">
+      <p class="text-sm premium-muted">Questions Loaded</p>
+      <p class="mt-3 text-3xl font-bold premium-title">
         {{ insights.summary.loadedQuestionCount | number }}
       </p>
     </div>
 
-    <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
-      <p class="text-sm text-slate-400">Answered Ratio</p>
+    <div class="premium-metric-card">
+      <p class="text-sm premium-muted">Answered Ratio</p>
       <p class="mt-3 text-3xl font-bold text-emerald-300">{{ insights.summary.answeredRatio }}%</p>
     </div>
 
-    <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
-      <p class="text-sm text-slate-400">Accepted Answer Ratio</p>
+    <div class="premium-metric-card">
+      <p class="text-sm premium-muted">Accepted Answer Ratio</p>
       <p class="mt-3 text-3xl font-bold text-blue-300">
         {{ insights.summary.acceptedAnswerRatio }}%
       </p>
     </div>
 
-    <div class="rounded-xl border border-slate-800 bg-slate-950 p-4">
-      <p class="text-sm text-slate-400">Total Views</p>
-      <p class="mt-3 text-3xl font-bold text-white">
+    <div class="premium-metric-card">
+      <p class="text-sm premium-muted">Total Views</p>
+      <p class="mt-3 text-3xl font-bold premium-title">
         {{ insights.summary.totalViews | number }}
       </p>
     </div>
   </div>
 
   <div class="mt-6 grid gap-6 xl:grid-cols-2">
-    <div class="rounded-2xl border border-slate-800 bg-slate-950 p-5">
-      <h3 class="text-base font-semibold text-white">Common Pain Points</h3>
+    <div class="premium-card rounded-3xl p-5">
+      <h3 class="text-base font-semibold premium-title">Common Pain Points</h3>
 
       @if (insights.painPoints.length === 0) {
-        <p class="mt-4 text-sm text-slate-500">
+        <p class="mt-4 text-sm premium-muted">
           No pain-point pattern detected from the loaded question sample.
         </p>
       } @else {
@@ -94,11 +94,11 @@
       }
     </div>
 
-    <div class="rounded-2xl border border-slate-800 bg-slate-950 p-5">
-      <h3 class="text-base font-semibold text-white">Most Common Tags</h3>
+    <div class="premium-card rounded-3xl p-5">
+      <h3 class="text-base font-semibold premium-title">Most Common Tags</h3>
 
       @if (insights.summary.mostCommonTags.length === 0) {
-        <p class="mt-4 text-sm text-slate-500">No tag metadata available.</p>
+        <p class="mt-4 text-sm premium-muted">No tag metadata available.</p>
       } @else {
         <div class="mt-4 flex flex-wrap gap-2">
           @for (tag of insights.summary.mostCommonTags; track tag) {
@@ -110,31 +110,31 @@
       }
 
       <div class="mt-6 grid grid-cols-2 gap-3">
-        <div class="rounded-xl border border-slate-800 bg-slate-900 p-4">
-          <p class="text-xs text-slate-500">Total Answers</p>
-          <p class="mt-2 text-xl font-bold text-white">
+        <div class="premium-card premium-card-hover rounded-2xl p-4">
+          <p class="text-xs premium-muted">Total Answers</p>
+          <p class="mt-2 text-xl font-bold premium-title">
             {{ insights.summary.totalAnswers | number }}
           </p>
         </div>
 
-        <div class="rounded-xl border border-slate-800 bg-slate-900 p-4">
-          <p class="text-xs text-slate-500">Average Score</p>
-          <p class="mt-2 text-xl font-bold text-white">
+        <div class="premium-card premium-card-hover rounded-2xl p-4">
+          <p class="text-xs premium-muted">Average Score</p>
+          <p class="mt-2 text-xl font-bold premium-title">
             {{ insights.summary.averageScore | number }}
           </p>
         </div>
       </div>
 
-      <div class="mt-6 rounded-xl border border-slate-800 bg-slate-900 p-4">
-        <p class="text-xs text-slate-500">API Quota</p>
+      <div class="mt-6 premium-card premium-card-hover rounded-2xl p-4">
+        <p class="text-xs premium-muted">API Quota</p>
 
         <p class="mt-2 text-sm text-slate-300">
           Remaining:
-          <span class="font-semibold text-white">
+          <span class="font-semibold premium-title">
             {{ insights.quotaRemaining ?? 'N/A' }}
           </span>
           /
-          <span class="font-semibold text-white">
+          <span class="font-semibold premium-title">
             {{ insights.quotaMax ?? 'N/A' }}
           </span>
         </p>
@@ -149,11 +149,11 @@
     </div>
   </div>
 
-  <div class="mt-6 rounded-2xl border border-slate-800 bg-slate-950 p-5">
-    <h3 class="text-base font-semibold text-white">Related Questions</h3>
+  <div class="mt-6 premium-card rounded-3xl p-5">
+    <h3 class="text-base font-semibold premium-title">Related Questions</h3>
 
     @if (insights.questions.length === 0) {
-      <p class="mt-4 text-sm text-slate-500">
+      <p class="mt-4 text-sm premium-muted">
         No related Stack Overflow questions found for the selected tags.
       </p>
     } @else {
@@ -163,7 +163,7 @@
             [href]="question.url"
             target="_blank"
             rel="noopener noreferrer"
-            class="block rounded-xl border border-slate-800 bg-slate-900 p-4 transition hover:border-orange-700"
+            class="block premium-card premium-card-hover rounded-2xl p-4 transition hover:border-orange-700"
           >
             <div class="flex flex-col justify-between gap-3 md:flex-row md:items-start">
               <div>
@@ -171,29 +171,29 @@
                   {{ question.title }}
                 </p>
 
-                <p class="mt-2 text-xs text-slate-500">
+                <p class="mt-2 text-xs premium-muted">
                   Last active {{ question.lastActivityAt | date: 'mediumDate' }}
                 </p>
               </div>
 
               <div class="grid shrink-0 grid-cols-3 gap-2 text-center">
                 <div class="rounded-lg bg-slate-950 px-3 py-2">
-                  <p class="text-xs text-slate-500">Score</p>
-                  <p class="text-sm font-semibold text-white">
+                  <p class="text-xs premium-muted">Score</p>
+                  <p class="text-sm font-semibold premium-title">
                     {{ question.score | number }}
                   </p>
                 </div>
 
                 <div class="rounded-lg bg-slate-950 px-3 py-2">
-                  <p class="text-xs text-slate-500">Answers</p>
-                  <p class="text-sm font-semibold text-white">
+                  <p class="text-xs premium-muted">Answers</p>
+                  <p class="text-sm font-semibold premium-title">
                     {{ question.answerCount | number }}
                   </p>
                 </div>
 
                 <div class="rounded-lg bg-slate-950 px-3 py-2">
-                  <p class="text-xs text-slate-500">Views</p>
-                  <p class="text-sm font-semibold text-white">
+                  <p class="text-xs premium-muted">Views</p>
+                  <p class="text-sm font-semibold premium-title">
                     {{ question.viewCount | number }}
                   </p>
                 </div>
